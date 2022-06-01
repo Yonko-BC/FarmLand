@@ -79,6 +79,7 @@ li{
 
 .nav-text a:hover{
     background-color: #01BF71;
+    color: #000000;
 }
 
 .nav-menu-items{

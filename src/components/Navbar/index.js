@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../../images/logoFL.png'
 import {FaBars} from 'react-icons/fa'
 
@@ -8,6 +8,22 @@ import { ethers } from 'ethers'
 // import { icons } from 'react-icons';
 
 const Navbar =  ({toggle}) => {
+ ///////////////////////////////////////
+
+
+
+
+
+
+
+// const[path,setPath] = useState("");
+
+
+
+
+
+
+///////////////////////////////////////
 
 
 
@@ -22,10 +38,10 @@ const Navbar =  ({toggle}) => {
           
           await window.ethereum.request({ method: "eth_accounts" })
           const accounts = await window.ethereum.request({ method: "eth_accounts" })
-          console.log("THE ACCOUNT IS ",accounts[0]);
+          // console.log("THE ACCOUNT IS ",accounts[0]);
           if(accounts[0] === undefined){
             
-            console.log("NO !Not connected");     
+            // console.log("NO !Not connected");     
                   //  document.getElementById("market").style.marginRight = "20rem"
 
             document.getElementById("market").style.display = "none"
@@ -34,7 +50,7 @@ const Navbar =  ({toggle}) => {
             
           }
           else{
-            console.log("YES ! connected");
+            // console.log("YES ! connected");
             // return'/marketplace'
             
             document.getElementById("market").style.display = "block"
@@ -142,16 +158,6 @@ const Navbar =  ({toggle}) => {
    
 //   }
 
-///////////////////////////////////////
-
-
-
-
-
-
-
-
-///////////////////////////////////////
 
 
   // function path() {

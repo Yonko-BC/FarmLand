@@ -31,6 +31,62 @@ const isMetaMaskConnected = async () => {
 }
 
 
+//////
+
+let accounts=null
+
+
+
+const[walletAddress,setWalletAddress] = useState("");
+
+
+
+
+async function requestAccount(){
+  // console.log('Requesting account ...');
+ //XCheck if Meta Mask Extension exists
+  if(window.ethereum){
+    // console.log('detected');
+    try{
+       accounts=await window.ethereum.request({
+        method:"eth_requestAccounts",
+      });
+      setWalletAddress(accounts[0]);
+    }catch(error){
+      // console.log('Error connecting ...');
+   }
+  }else{
+    alert('Meta Mask not detected');
+ }
+}
+
+window.onload=requestAccount()
+
+/////////////
+
+window.ethereum.on("accountsChanged", async ()=>{
+  if (typeof window.ethereum !== "undefined") {
+    try {
+      await window.ethereum.request({ method: "eth_accounts" })      
+        setWalletAddress(accounts[0]);
+        accounts = await window.ethereum.request({ method: "eth_accounts" })
+        window.location.reload()
+        // console.log("refreshed");
+
+      // console.log("refreshed");
+    } catch (error) {
+    }
+ 
+
+  } else {
+    alert('we cant find metamask installed')
+  }
+}) 
+
+
+///////
+
+
 const checkIfUserLogged = async ()=>{
       
       if (ethereum) {
@@ -40,7 +96,8 @@ const checkIfUserLogged = async ()=>{
             
             await window.ethereum.request({ method: "eth_accounts" })
             const accounts = await window.ethereum.request({ method: "eth_accounts" })
-            console.log(accounts[0]);
+            // console.log(accounts[0]);
+            setWalletAddress(accounts[0]);
 
             // if (accounts[0] !== "undefined"){
 
@@ -73,10 +130,10 @@ await isMetaMaskConnected().then((connected) => {
 
   if (connected) {
     
-    console.log("connected");
-    console.log(accounts[0]);
+    // console.log("connected");
+    // console.log(accounts[0]);
       // metamask is connected
-      loginBtn.textContent = accounts[0]
+      loginBtn.textContent = walletAddress
       
          loginBtn.style.marginLeft = "-14rem"
          loginBtn.style.background='#01BF71'
@@ -109,7 +166,7 @@ await isMetaMaskConnected().then((connected) => {
     }
 
 
-    window.onload = checkIfUserLogged()
+    window.onload = checkIfUserLogged() 
 // window.onload=isMetaMaskConnected()
   return (
     <>

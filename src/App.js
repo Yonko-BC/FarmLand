@@ -30,10 +30,10 @@ function App() {
 
 
       </Routes>
-     
+   
     </Router>
+
   
-    
   );
 }
 

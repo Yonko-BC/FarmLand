@@ -2,6 +2,7 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
+import { DivWrap, FormInput } from '../SignIn/SignInElements';
 
 const Background = styled.div`
   width: 1190px;
@@ -15,14 +16,16 @@ const Background = styled.div`
 `;
 
 const ModalWrapper = styled.div`
-  display: block;
-  width: 800px;
-  height: 500px;
+  /* display: block; */
+  width: 500px;
+  height: 600px;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
   background: #fff;
   color: #000;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+  /* grid-template-columns: 1fr ; */
   position: relative;
   z-index: 10;
   border-radius: 10px;
@@ -43,14 +46,68 @@ const ModalContent = styled.div`
   align-items: center;
   line-height: 1.8;
   color: #141414;
-  p {
+  .landId{
+    display: flex;
+    margin-left: -2rem;
+
+  }
+
+  .landId h4{
+    margin-right: 1rem;
+  }
+
+  h1{
+  
+    margin-top:3rem;
+    margin-bottom: 2rem;
+  }
+  
+  input{
+    margin-top: -1rem;
+    margin-left: 2rem;
+    width: 10rem;
+    color: #141414;
+  }
+  .inputForm{
+    margin-left: 9.2rem;
+  }
+
+  .para {
+    margin-bottom: 3rem;
+  }
+  
+  .wrap-input100{
+    /* margin-left: 10rem; */
+    margin-top: 1rem;
+    display: flex;
     margin-bottom: 1rem;
+
   }
   button {
-    padding: 10px 24px;
-    background: #141414;
-    color: #fff;
+    border-radius: 50px;
+    background: ${({primary})=>(primary ? '#01BF71':'#010606')};
+    white-space: nowrap;
+    padding: ${({big})=>(big ? '16px 58px':'14px 48px')};
+    color: ${({dark})=>(dark ? '#010606':'#fff')};
+    font-size: ${({fontBig})=>(fontBig ? '20px':'16px')};
+    outline: none ;
     border: none;
+    cursor: pointer;
+    display: flex;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+    margin-top: 3rem;
+    &:hover {
+        text-decoration: none;
+
+        transition: all 0.2s ease-in-out;
+        background: ${({primary})=>(primary ? 'black':'#01BF71')};
+        
+        color: ${({dark})=>(dark ? '#010606':'white')};
+
+    }
   }
 `;
 
@@ -105,8 +162,18 @@ function ModalInvest({ showModalInvest, setShowModalInvest }) {
               {/* <ModalImg src={require('./Modal.png')} alt='camera' /> */}
               {/* <div>detail</div> */}
               <ModalContent>
-                <h1>Are you ready? Owner land Project</h1>
-                <p>Get exclusive access to our next launch.</p>
+                <h1>Launch land Project</h1>
+                <p className='para'>Set the project information of your next launch.</p>
+                <div className='landId'><h4>Land Id : </h4><p>land#00001</p></div>
+                <DivWrap className="wrap-input100 validate-input m-b-16" data-validate="Valid Number is required">
+                <h5>Pudget :  </h5><FormInput className='inputForm' type="number" placeholder="ETH" min="10" max="100" required/>
+            </DivWrap>
+          <DivWrap className="wrap-input100 validate-input m-b-16" data-validate="Password is required"> 
+          <h5>Delay : &nbsp;&nbsp;  </h5> <FormInput className='inputForm' type="number" placeholder="day" min="1" max="30"  required/>    
+          </DivWrap>
+          <DivWrap className="wrap-input100 validate-input m-b-16" data-validate="Password is required"> 
+          <h5>number of investor : &nbsp;&nbsp;  </h5> <FormInput  type="number" placeholder="Max number" min="1" max="30"  required/>    
+          </DivWrap>
                 <button>Join Now</button>
               </ModalContent>
               <CloseModalButton

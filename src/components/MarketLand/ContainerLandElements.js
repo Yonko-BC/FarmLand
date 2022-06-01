@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 export const LandContainer=styled.div`
   height: auto;
+  /* min-height: 44rem; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -29,7 +30,7 @@ grid-template-columns: 1fr 1fr 1fr ;
 align-items: center;
 grid-gap: 16px;
 padding:0 50px;
-margin-bottom: 3rem !important;
+margin-bottom: 9rem !important;
 /* margin-left: 3rem; */
 
 
@@ -65,8 +66,8 @@ width: 17rem ;
   box-shadow:0 1px 77px rgba(0,0,0,0.2);
   transition: all 0.2s ease-in-out;
   overflow: hidden;
-  margin-left: 3rem;
-  margin-top: 2rem;
+  margin-left: 3rem; 
+   margin-top: 2rem;
 
 /* min-width: 400rem; */
 /* right: 34rem !important; */

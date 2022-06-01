@@ -11,13 +11,14 @@ contract MintLand is ERC721URIStorage {
     using Counters for Counters.Counter;
 
     // ---------------------- Var -------------
-    Counters.Counter private _tokenIds;
-    Counters.Counter private _investementIds;
-    mapping(uint256 => LAND) private IdToLand;
+    Counters.Counter public _tokenIds;
+    Counters.Counter public _investementIds;
+    mapping(uint256 => LAND) public IdToLand;
     mapping(uint256 => INVESTMENT) private idToInvestmentPool;
     mapping(uint256 => uint256) private InvestmentPoolBalance;
     mapping(address => mapping(uint256 => uint256)) private InvestorBalance;
-    mapping(uint256 => bool) IsLandOnSell;
+    mapping(uint256 => bool) private IsLandOnSell;
+    mapping(address => uint256[]) private investorPool;
     address public minterAddress;
     struct LAND {
         uint256 id;
@@ -89,7 +90,6 @@ contract MintLand is ERC721URIStorage {
         emit landMinted(newItemId, _landOwner, _tokenURI);
     }
 
-
     function userBalance(address _user) external view returns (uint256) {
         uint256 balance = IERC721(address(this)).balanceOf(_user);
         return balance;
@@ -105,21 +105,24 @@ contract MintLand is ERC721URIStorage {
         LAND memory land = IdToLand[_landId];
         require(land.owner == msg.sender, "not Owner");
         require(land.value >= _budget, "over price");
-        uint256 currentId = _investementIds.current();
         _investementIds.increment();
+        uint256 currentId = _investementIds.current();
         idToInvestmentPool[currentId].id = currentId;
         idToInvestmentPool[currentId].landId = _landId;
         idToInvestmentPool[currentId].owner = msg.sender;
         idToInvestmentPool[currentId].totalBudget = _budget;
         idToInvestmentPool[currentId].status = INVEST_STATUS.CREATED;
         idToInvestmentPool[currentId].createdAt = block.timestamp;
-        
+
         idToInvestmentPool[currentId].lastDelayForInvestInDays =
             _lastDelayForInvestInDays *
             1 days;
         idToInvestmentPool[currentId].minEntry = _budget / _maxInvestor;
         idToInvestmentPool[currentId].maxInvestors = _maxInvestor;
-        console.log("TIME  = '%s'",idToInvestmentPool[currentId].lastDelayForInvestInDays);
+        console.log(
+            "TIME  = '%s'",
+            idToInvestmentPool[currentId].lastDelayForInvestInDays
+        );
         IERC721(address(this)).transferFrom(msg.sender, address(this), _landId);
         emit investPoolCreated(currentId, msg.sender, _landId);
     }
@@ -127,8 +130,11 @@ contract MintLand is ERC721URIStorage {
     // @dev to add be investor ...
     function invest(uint256 _investmentPoolId) external payable {
         INVESTMENT memory investment = idToInvestmentPool[_investmentPoolId];
-        console.log("pool time end = '%s'",idToInvestmentPool[_investmentPoolId].minEntry);
-        console.log("block time = '%s'",block.timestamp);
+        console.log(
+            "pool time end = '%s'",
+            idToInvestmentPool[_investmentPoolId].minEntry
+        );
+        console.log("block time = '%s'", block.timestamp);
         require(investment.status == INVEST_STATUS.CREATED, "Closed");
         // console.log(
         //     "investment.totalBudget  = '%s' // value+poolBalance = '%s'",
@@ -153,9 +159,14 @@ contract MintLand is ERC721URIStorage {
             "TEST  = '%s'",
             (msg.value % investment.minEntry) / (10**18)
         );
-        idToInvestmentPool[_investmentPoolId].investors.push(msg.sender);
+        if (isInvestorExist(msg.sender, _investmentPoolId) == false) {
+            idToInvestmentPool[_investmentPoolId].investors.push(msg.sender);
+
+            investorPool[msg.sender].push(_investmentPoolId);
+        }
         InvestorBalance[msg.sender][_investmentPoolId] += msg.value;
         InvestmentPoolBalance[_investmentPoolId] += msg.value;
+
         emit newInvestor(_investmentPoolId, msg.sender);
     }
 
@@ -204,8 +215,14 @@ contract MintLand is ERC721URIStorage {
     function claim(uint256 _investmentPoolId) external {
         INVESTMENT memory investment = idToInvestmentPool[_investmentPoolId];
         require(investment.status == INVEST_STATUS.PAIED, "not paied");
-        console.log("balance  ='%s' ",InvestorBalance[msg.sender][_investmentPoolId]);
-        console.log("balance  ='%s' ",(InvestorBalance[msg.sender][_investmentPoolId] * 10) / 100);
+        console.log(
+            "balance  ='%s' ",
+            InvestorBalance[msg.sender][_investmentPoolId]
+        );
+        console.log(
+            "balance  ='%s' ",
+            (InvestorBalance[msg.sender][_investmentPoolId] * 10) / 100
+        );
         uint256 investorShare = InvestorBalance[msg.sender][_investmentPoolId] +
             ((InvestorBalance[msg.sender][_investmentPoolId] * 10) / 100);
         InvestorBalance[msg.sender][_investmentPoolId] = 0;
@@ -213,7 +230,7 @@ contract MintLand is ERC721URIStorage {
         require(sent, "faild");
     }
 
-    function sellLand(uint256 _investmentPoolId) onlyMinter external {
+    function sellLand(uint256 _investmentPoolId) external onlyMinter {
         INVESTMENT memory investment = idToInvestmentPool[_investmentPoolId];
         require(investment.createdAt + 365 days < block.timestamp, "not yet");
         require(investment.status != INVEST_STATUS.PAIED, "Paied");
@@ -233,6 +250,23 @@ contract MintLand is ERC721URIStorage {
     }
 
     // VIEWS
+
+    function isInvestorExist(address _investorAddress, uint256 _investmentPool)
+        public
+        view
+        returns (bool)
+    {
+        INVESTMENT memory investment = idToInvestmentPool[_investmentPool];
+
+        for (uint256 index = 0; index < investment.investors.length; index++) {
+            if (investment.investors[index] == _investorAddress) {
+                console.log("TRUE");
+                return true;
+            }
+        }
+        console.log("False");
+        return false;
+    }
 
     function getInvstementPoolDetail(uint256 _poolId)
         external
@@ -254,8 +288,19 @@ contract MintLand is ERC721URIStorage {
         return address(this).balance;
     }
 
-    function getMiniEntry(uint _poolId) external view returns(uint){
+    function getMiniEntry(uint256 _poolId) external view returns (uint256) {
         INVESTMENT memory pool = idToInvestmentPool[_poolId];
         return pool.minEntry;
+    }
+
+    function getInvestorInvestments(address _investorAddress)
+        external
+        view
+        returns (uint256[] memory)
+    {
+        uint256[] memory investorTotalInvestmentPools = investorPool[
+            _investorAddress
+        ];
+        return investorTotalInvestmentPools;
     }
 }

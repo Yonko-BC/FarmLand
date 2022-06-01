@@ -14,7 +14,7 @@ import ModalDetail from '../Modal/ModalDetail'
 
 
 import styled from 'styled-components';
-import { createInvestmentPool, invest, mintLand, signer_address } from '../../interacting/main'
+import { createInvestmentPool, invest, mintLand, signer_address , contract } from '../../interacting/main'
 
 
 
@@ -43,9 +43,10 @@ const Button = styled.button`
 
 const ContainerLand = () => {
 
-    // const vari = useState(signer_address)
 
-//  const [openModal,setOpenModal] = useState(false);
+    
+
+
 const [showModalDetail, setShowModalDetail] = useState(false);
 
 const openModalDetail = () => {
@@ -61,24 +62,9 @@ const openModalInvestor = () => {
 
 
 
- async function getSignerAddress(){
-    
-
-    return await  signer_address
-}
-
-// let myVar = getSignerAddress()
-
-// // console.log("TEST ",myVar);
-
-//  function getSigner(){
-//     console.log("TEST ",myVar);
-//     return   myVar;
-// }
 
 
 
-    
     return (
         <>
      
@@ -117,75 +103,12 @@ const openModalInvestor = () => {
                   <Btn to='/signup'  primary='true' onClick={openModalInvestor}>
                        Invest
                   </Btn>   
-                  <Btn  primary='true' onClick={invest}>
+                  {/* <Btn  primary='true' onClick={invest}>
                        test
-                  </Btn>   
+                  </Btn>    */}
 
               </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon1}/>
-                  <LandH2>Land#000002</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard> <LandCard>
-                  <LandIcon src={Icon1}/>
-                  <LandH2>Land#000003</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon2}/>
-                  <LandH2>Land#000004</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon3}/>
-                  <LandH2>Land#000005</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon3}/>
-                  <LandH2>Land#000006</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon3}/>
-                  <LandH2>Land#000007</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon3}/>
-                  <LandH2>Land#000008</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon3}/>
-                  <LandH2>Land#000009</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon3}/>
-                  <LandH2>Land#0000010</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon3}/>
-                  <LandH2>Land#0000011</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon3}/>
-                  <LandH2>Land#0000012</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon3}/>
-                  <LandH2>Land#0000013</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon3}/>
-                  <LandH2>Land#0000014</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
+ 
           </LandWrapper>
       </LandContainer>
       </>

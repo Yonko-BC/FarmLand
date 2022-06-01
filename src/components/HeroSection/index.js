@@ -1,20 +1,22 @@
 import React , {useState} from 'react'
 import {HeroContainer,HeroBg,VideoBg,HeroContent,HeroBtnWrapper,HeroH1,HeroP,ArrowForward,ArrowRight} from './HeroElements'
-import video from '../../videos/video3.mp4'
+// import video from '../../videos/video1.mp4'
 import { ButtonR } from '../ButtonElement'
 
 const HeroSection = () => {
-
+// const [i,seti] = useState('1')
     const [hover,setHover] = useState(false)
 
 
     const onHover = () =>{
         setHover(!hover)
     }
+  
+    
   return (
       <HeroContainer id='home'>
           <HeroBg>
-              <VideoBg autoPlay loop muted src={video}
+              <VideoBg autoPlay loop muted src={require('../../videos/video2.mp4')}
                type='video/mp4'/>
           </HeroBg>
           <HeroContent>

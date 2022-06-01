@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 import {Link } from 'react-router-dom'
 import background from '../../images/pexels-ákos-szabó-440731.jpeg'
+// import { link } from 'ethereum-waffle'
 
 export const Body = styled.body`
  margin: 0px;
@@ -126,9 +127,11 @@ export const Div = styled.div`
 `
 
 export const BtnBoxdiv= styled.div`
+display: grid;
      text-align: center;
     width: 100%;
     margin-top: 0.7em;
+    margin-left: 3rem;
 `
 
 export const Button = styled.button`
@@ -149,7 +152,27 @@ export const Button = styled.button`
         color: black;
     }
 `
+export const ButtonR = styled(Link)`
+text-decoration: none;
 
+    border-radius: 1.5rem;
+    text-align: center;
+    border: none;
+    height: auto;
+    width: 15em;
+    background: linear-gradient(to right,rgb(0, 0, 0),rgb(8, 74, 5),#10bd4aef,#23eb3483);
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+    margin-top: 15px;
+    padding: 10px;
+    outline: none;
+    cursor: pointer;
+
+    &:hover{
+        background: white;
+        color: black;
+    }
+`
 export const TXTp=styled.p`
       position: relative;
     top:21px;

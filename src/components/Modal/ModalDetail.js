@@ -11,7 +11,7 @@ const Background = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: -90rem;
+  /* margin-top: -90rem; */
 `;
 
 const ModalWrapper = styled.div`

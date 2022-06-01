@@ -110,6 +110,7 @@ interface IERC721 is IERC165 {
      *
      * Emits an {Approval} event.
      */
+
     function approve(address to, uint256 tokenId) external;
 
     /**

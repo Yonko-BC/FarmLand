@@ -1,16 +1,16 @@
 import React from 'react'
-import {Icon,DivContainer,Body,Form,DivTitle,H3,H5, DivWrap,FormInput,Div,Checkinput, Checklabel,TXTa,BtnBoxdiv,Button,TXTp,SignA,} from './SignInElements'
+import {Icon,DivContainer,ButtonR,Body,Form,DivTitle,H3,H5, DivWrap,FormInput,Div,Checkinput, Checklabel,TXTa,BtnBoxdiv,Button,TXTp,SignA,} from './SignInElements'
 import { NavLogo} from '../Navbar/NavbarElements'
 import logo from '../../images/logoFL.png'
 import { useState } from 'react'
 import { ethers } from 'ethers'
+import * as FaIcons from 'react-icons/fa';
 const SignIn = () => {
 
   let accounts=null
 
   
-
-
+  // const icon = {marginTop: "2rem" }
 
   const[walletAddress,setWalletAddress] = useState("");
 
@@ -43,7 +43,7 @@ const SignIn = () => {
   }
 }
 
-//  window.onload=requestAccount()
+  // window.onload=requestAccount()
 
   window.ethereum.on("accountsChanged", async ()=>{
     if (typeof window.ethereum !== "undefined") {
@@ -93,13 +93,14 @@ const SignIn = () => {
             
             <TXTa href="#" class="txt1" > Forgot Password? </TXTa> 
         </Div>
-        <BtnBoxdiv class="btn-box ">
-            <Button class="btn-primary" >Login</Button>
-            <Button class="btn-primary"  
+        <BtnBoxdiv class="btn-box "> 
+            <Button class="btn-primary" ><FaIcons.FaSignInAlt/> &nbsp;&nbsp; Login</Button>
+            <ButtonR to='/marketplace' class="btn-primary"  
             onClick={connectWallet}
-            >Wallet</Button>
-            <h3>wallet address {walletAddress}</h3>
+            ><FaIcons.FaWallet/> &nbsp;&nbsp;  Connect Wallet </ButtonR>
+            {/* <h3>wallet address {walletAddress}</h3> */}
         </BtnBoxdiv>  
+      
         <TXTp id="text3">Not a Member?</TXTp> <SignA id="signup" href="#">Signup Now</SignA>
    </Form>
         </DivContainer>  
