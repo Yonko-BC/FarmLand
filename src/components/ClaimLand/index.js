@@ -77,8 +77,9 @@ useEffect(() => {
   
   getInvestorInvestments();
 }, []);
-console.log(invests.length);
+
 /*             --------------------------        */
+
 
 async function claim(investmentPoolId) {
         const claim_Tx = await contract.claim(investmentPoolId);
