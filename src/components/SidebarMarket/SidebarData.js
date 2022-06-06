@@ -43,11 +43,5 @@ export const SidebarData=[
       cName: 'nav-text'
    },
 
-     {
-        title: 'Support',
-        path: '/support',
-        icon: <MdIcons.MdSupportAgent color="black"/>,
-        cName: 'nav-text'
-     }
     ]
 

@@ -3,6 +3,7 @@ import React, { useRef, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
 import {FaEthereum} from 'react-icons/fa';
+import { createInvestmentPool, invest, mintLand, signer_address , contract } from '../../interacting/main'
 
 import { DivWrap, FormInput } from '../SignIn/SignInElements';
 
@@ -15,7 +16,7 @@ const Background = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* margin-top: -90rem; */
+  margin-top: -30rem;
 `;
 
 const ModalWrapper = styled.div`
@@ -198,7 +199,7 @@ function ModalInvestor({ showModalInvestor, setShowModalInvestor }) {
               {/* <ModalImg src={require('./Modal.png')} alt='camera' /> */}
               {/* <div>detail</div> */}
               <ModalContent>
-                <h1>Invest project </h1>
+                <h1>Invest project </h1> 
                 <p className='para'>Set the project information of your next launch.</p>
                 <div className='landId'><h4>Land Id : </h4><p>land#00001</p></div>
                 <div className='landId'><h4>Pudget : </h4><p>21 &nbsp;&nbsp; Eth &nbsp;&nbsp;&nbsp;&nbsp; <FaEthereum/></p></div>
@@ -213,7 +214,7 @@ function ModalInvestor({ showModalInvestor, setShowModalInvestor }) {
           <DivWrap className="wrap-input100 validate-input m-b-16" data-validate="Password is required"> 
           <h5>number of investor : &nbsp;&nbsp;  </h5> <FormInput  type="number" placeholder="Max number" min="1" max="30"  required/>    
           </DivWrap>
-                <button>Join Now</button>
+                <button onClick={invest}>invest in</button>
               </ModalContent>
               <CloseModalButton
                 aria-label='Close modal'

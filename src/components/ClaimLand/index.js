@@ -6,7 +6,7 @@ import Icon3 from '../../images/crypto.png'
 import {LandContainer,LandH1,LandWrapper,LandSurface,LandPosition,LandCard,LandIcon,LandH2,LandP} from './ContainerLandElements'
 import { AiFillExclamationCircle } from 'react-icons/ai'
 import { FaMapMarker } from 'react-icons/fa'
-
+  
 import { Button as Btn } from '../ButtonElement'
 import { useState } from 'react'
 import ModalClaim from '../Modal/ModalClaim'
@@ -48,6 +48,18 @@ const ClaimLand = () => {
 const [invests, setInvests] = useState([]);
 const [pools, setPools] = useState([]);
 
+
+const [newVari, setNewVari] = useState([]);
+var yo=-1
+
+pools.forEach(i => {
+ 
+if(yo!==Number(i.id.toString()) ){
+  newVari.push(i)
+  yo=Number(i.id.toString())
+  console.log('yooooo',i);
+}
+});
 
 
 
@@ -157,15 +169,15 @@ else if( statut_number === '3'){
 
 
             <LandIcon src={Icon1}/>
-            <LandH2>Land Id : {pools[invest - 1].id.toString()}</LandH2>
-            <div> <LandPosition> <FaMapMarker/> Statue : {Status(pools[invest - 1].status.toString())}</LandPosition>
-            <LandSurface>&nbsp;&nbsp;<FaMapMarker/> Time : {(pools[invest - 1].createdAt.toString())} </LandSurface>
+            <LandH2>Land Id : {newVari[invest - 1].id.toString()}</LandH2>
+            <div> <LandPosition> <FaMapMarker/> Statue : {Status(newVari[invest - 1].status.toString())}</LandPosition>
+            <LandSurface>&nbsp;&nbsp;<FaMapMarker/> Time : {(newVari[invest - 1].createdAt.toString())} </LandSurface>
             </div>
-           { pools[invest - 1].status.toString() === "2" ? (
-             <Btn to='/signup'  primary='true' onClick={() => claim(pools[invest - 1].id.toString())} >
+           { newVari[invest - 1].status.toString() === "2" ? (
+             <Btn to='/signup'  primary='true' onClick={() => claim(newVari[invest - 1].id.toString())} >
              Claim
           </Btn>) : (
-            <Btn to='/signup'  primary='true' onClick={() => claim(pools[invest - 1].id.toString())} >
+            <Btn to='/signup'  primary='true' onClick={() => claim(newVari[invest - 1].id.toString())} >
             No Claim
          </Btn> 
           )

@@ -1,8 +1,12 @@
 
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect,useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
+import { contract, signer_address } from "../../interacting/main";
+import { id, owner, value } from '../ContainerLand';
 
+
+ 
 const Background = styled.div`
   width: 1190px;
   height: 930px;
@@ -11,7 +15,7 @@ const Background = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: -30rem;
+  margin-top: -10rem;
 `;
 
 const ModalWrapper = styled.div`
@@ -85,7 +89,7 @@ function ModalDetail({ showModalDetail, setShowModalDetail }) {
         console.log('I pressed');
       }
     },
-    [setShowModalDetail, showModalDetail]
+    [setShowModalDetail, showModalDetail] 
   );
 
   useEffect(
@@ -96,16 +100,79 @@ function ModalDetail({ showModalDetail, setShowModalDetail }) {
     [keyPress]
   );
 
+  /**
+  **************** Get Detail ****************
+  **/
+
+  const [counter, setCounter] = useState([]);
+
+  const [lands, setLand] = useState([]);
+  const [newVari, setNewVari] = useState([]);
+  counter.forEach(i => {
+  
+    if(!lands.includes(Number(i.id.toString())) ){
+     
+      lands.push(Number(i.id.toString())) 
+      newVari.push(i)
+      console.log('test array', newVari[0].owner);   
+    }  
+    });
+    // console.log('ayyy', counter );  
+
+
+
+  useEffect(() => {
+    const getUserLands = async () => {
+      
+      // const allTokens = await contract._tokenIds();
+      // console.log('allTokens',allTokens);
+      // for (let index = 1; index <= allTokens; index++) {
+        const ownerO = await contract.ownerOf(id.toString(16)); 
+
+        if (ownerO === (await signer_address)) {
+          const landDetail = await contract.IdToLand(id.toString(16));
+        //   let land = lands; 
+        //   land.push(landDetail);
+        //   setLand(land); 
+
+            let count = counter   
+            count.push(landDetail) 
+            setCounter(count)
+            // console.log(counter); 
+        // console.log("landDetail modal ", landDetail);
+        }
+      }  
+
+
+      
+    
+
+    getUserLands();
+  }, []);
+            // console.log(counter.length);
+
+ /**
+  ********************************************
+   */
+
+
+
+ 
   return (
     <>
       {showModalDetail ? (
         <Background onClick={closeModal} ref={modalRef}>
-         
+          
             <ModalWrapper showModalDetail={showModalDetail}>
               <ModalImg src={require('./Modal.png')} alt='camera' />
               <ModalContent>
                 <h1>Are you ready? DETAIL</h1>
                 <p>Get exclusive access to our next launch.</p>
+                <p>id : {id}</p>
+                <p>owner address : {owner}</p>
+                <p>land value : {value} ETH</p>
+
+ 
                 <button>Join Now</button>
               </ModalContent>
               <CloseModalButton

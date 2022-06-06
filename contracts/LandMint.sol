@@ -16,7 +16,7 @@ contract MintLand is ERC721URIStorage {
     mapping(uint256 => LAND) public IdToLand;
     mapping(uint256 => INVESTMENT) private idToInvestmentPool;
     mapping(uint256 => uint256) private InvestmentPoolBalance;
-    mapping(address => mapping(uint256 => uint256)) private InvestorBalance;
+    mapping(address => mapping(uint256 => uint256)) public InvestorBalance;
     mapping(uint256 => bool) private IsLandOnSell;
     mapping(address => uint256[]) private investorPool;
     address public minterAddress;
@@ -152,7 +152,7 @@ contract MintLand is ERC721URIStorage {
             "end"
         );
         require(
-            (msg.value % investment.minEntry) / (10**18) == 0,
+            (msg.value % 2) / (10**18) == 0,
             "wrong value"
         );
         console.log(

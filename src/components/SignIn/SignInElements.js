@@ -5,8 +5,8 @@ import background from '../../images/pexels-ákos-szabó-440731.jpeg'
 // import { link } from 'ethereum-waffle'
 
 export const Body = styled.body`
- margin: 0px;
-    padding: 43px 0px; 
+     margin: 0px;
+     padding: 43px 0px; 
      background-image: url(${background});
     background-size:cover;
     background-position:center;

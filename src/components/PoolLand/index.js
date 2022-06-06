@@ -8,9 +8,10 @@ import { AiFillExclamationCircle } from 'react-icons/ai'
 import { FaMapMarker } from 'react-icons/fa'
 
 import { Button as Btn } from '../ButtonElement'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import ModalPool from '../Modal/ModalPool'
 import ModalDetail from '../Modal/ModalDetail'
+import { createInvestmentPool, invest, mintLand, signer_address , contract } from '../../interacting/main'
 
 
 import styled from 'styled-components';
@@ -58,11 +59,48 @@ const openModalPool = () => {
 };
 
 
+const [invests, setInvests] = useState([]);
 
+const [lands, setLand] = useState([]);
+const [newVari, setNewVari] = useState([]);
+
+invests.forEach(i => {
+
+  if(!lands.includes(Number(i.id.toString())) ){
+   
+    lands.push(Number(i.id.toString()))
+    newVari.push(i)
+    console.log('ayyy', newVari);  
+  }  
+  });  
+  console.log('ayyy', newVari);  
+
+
+useEffect(() => {
+  const getUserPools = async () => { 
+    
+    const allTokens = await contract._investementIds();
+    for (let index = 1; index <= allTokens; index++) {
+      const investDetail = await contract.getInvstementPoolDetail(index);
+  
+      if (investDetail.owner === await signer_address) {
+        const investDetail = await contract.getInvstementPoolDetail(index);
+        let count = invests
+            count.push(investDetail) 
+            setInvests(count) 
+        console.log('idodididi',invests);
+      }
+    } 
+    
+    
+  };
+  
+  getUserPools();
+}, []);
     
     return (
         <>
-     
+      
       <LandContainer id='test'>
         
       {/* <Container> */}
@@ -73,102 +111,49 @@ const openModalPool = () => {
 
         {/* <GlobalStyle /> */}
       {/* </Container> */}
-          <LandH1>Your Lands</LandH1>
+          <LandH1>Your Pools Lands </LandH1>
           {/* {openModal && <Modal closeModal={setOpenModal}/>} */}
         
           <LandWrapper>
     
 
         
-              <LandCard>
-                  {/* <Modal showModal={showModal} setShowModal={setShowModal}/>
-                  <GlobalStyle /> */}
-
-      
-                  <Button onClick={openModalDetail}>< AiFillExclamationCircle color="black"/></Button>
+          {newVari.length > 0 ? (
+    newVari.map((invest) => {
+      // console.log("detailed",pools[invest-1].id.toString());
+      // console.log("alndID",invest.toString())
+      //console.log("HOW MUCH !");    
+      return ( 
+            
+        <LandCard>  
                   
-     
-
-                  <LandIcon src={Icon1}/>
-                  <LandH2>Land#000001</LandH2>
-                  <div> <LandPosition> <FaMapMarker/> Position : ( 2.333 , 3.476 )</LandPosition>
-                  <LandSurface>&nbsp;&nbsp;<FaMapMarker/> Surface : 1530 m2 </LandSurface>
-                  </div>
-                 
-                  <Btn to='/signup'  primary='true' onClick={openModalPool}>
-                       Project
-                  </Btn>   
-
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon1}/>
-                  <LandH2>Land#000002</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard> <LandCard>
-                  <LandIcon src={Icon1}/>
-                  <LandH2>Land#000003</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon2}/>
-                  <LandH2>Land#000004</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon3}/>
-                  <LandH2>Land#000005</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon3}/>
-                  <LandH2>Land#000006</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon3}/>
-                  <LandH2>Land#000007</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon3}/>
-                  <LandH2>Land#000008</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon3}/>
-                  <LandH2>Land#000009</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon3}/>
-                  <LandH2>Land#0000010</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon3}/>
-                  <LandH2>Land#0000011</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon3}/>
-                  <LandH2>Land#0000012</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon3}/>
-                  <LandH2>Land#0000013</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
-              <LandCard>
-                  <LandIcon src={Icon3}/>
-                  <LandH2>Land#0000014</LandH2>
-                  <LandP>we help reduce your fees and increase your overall revenue.</LandP>
-              </LandCard>
+        <Button onClick={openModalDetail}>< AiFillExclamationCircle color="black"/></Button>
+         
+        <LandIcon src={Icon1}/>    
+        <LandH2>Land#.  {invest.id.toString()}</LandH2>
+        <div> <LandPosition> <FaMapMarker/> Position : ( 2.333 , 3.476 )</LandPosition>
+        <LandSurface>&nbsp;&nbsp;<FaMapMarker/> Surface : 1530 m2 </LandSurface>
+        </div>
+       
+        <Btn to='/signup'  primary='true' onClick={openModalPool}>
+             Invest
+        </Btn>   
+        {/* <Btn  primary='true' onClick={invest}>
+             test 
+        </Btn>    */}
+  
+    </LandCard>
+   );
+  }) 
+) : (
+  <h1>NO DATA</h1>
+)} 
+ 
           </LandWrapper>
       </LandContainer>
       </>
   
-      )
+      ) 
   }
   
   export default ContainerLand

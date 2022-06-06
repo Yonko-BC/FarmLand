@@ -10,6 +10,7 @@ import Signup from './pages/Signup';
 import Inventory from './pages/inventory';
 import Claim from './pages/claim';
 import Pool from './pages/pool';
+import Mint from './pages/admin';
 
 
 
@@ -27,6 +28,8 @@ function App() {
         <Route path="inventory" exact element={<Inventory />} />
         <Route path="claim" exact element={<Claim />} />
         <Route path="pool" exact element={<Pool />} />
+        <Route path="mint" exact element={<Mint />} />
+
 
 
       </Routes>

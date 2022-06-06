@@ -256,6 +256,30 @@ const contract_abi = [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "InvestorBalance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "_investementIds",
     "outputs": [
@@ -864,22 +888,27 @@ const contract_abi = [
   }
 ]
 
-const contract_address = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+export const contract_address = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
 const userAddress = "0xBcd4042DE499D14e55001CcbB24a551F3b954096"
  export const contract = new ethers.Contract(contract_address, contract_abi,signer)
 
 // console.log(contract);
 
 
-export async function mintLand() {
+export async function mintLand(owner,valueLand) {
     
-    const land_value = ethers.utils.parseEther("50")
-    const mintLand = await contract.mintLand(userAddress, "URI", land_value)
+    const land_value = ethers.utils.parseEther(valueLand)
+    const mintLand = await contract.mintLand(owner, "URI", land_value)
     console.log("Minted");
 }
 
-export async function createInvestmentPool(){
-    const landId = 1
+export async function getMinter(){
+  const minterAddress = await contract.minterAddress()
+  return minterAddress
+}
+
+export async function createInvestmentPool(a){
+    const landId = a
     const budget = ethers.utils.parseEther("49")
     const last_delay_for_investment_in_day = 4
     const max_investor = 30
@@ -892,8 +921,8 @@ export async function createInvestmentPool(){
 
 export async function invest() {
 
-    const investmentPoolId = 0
-    const priceMale = 3
+    const investmentPoolId = 2
+    const priceMale = 1
     const miniEntry = await contract.getMiniEntry(investmentPoolId)
     const converted_miniEntry = ethers.utils.formatEther(miniEntry)
     const amount = ethers.utils.parseEther(`${converted_miniEntry * priceMale}`)
@@ -902,3 +931,20 @@ export async function invest() {
 }
 
 
+
+export async function withdrawPool() {
+  // [owner, account1, account2, account3] = await ethers.getSigners()
+  const investmentPoolId = 1
+  const withdrawPool_TX = await contract.withdrawPool(investmentPoolId)
+  console.log("Withdrew");
+}
+
+
+export async function payTheLoan() {
+
+  // [owner, account1, account2, account3] = await ethers.getSigners()
+  const investmentPoolId = 1
+  const budget = ethers.utils.parseEther("55")
+  const payTheLoan_TX = await contract.payTheLoan(investmentPoolId, { value: budget })
+  console.log("Paied");
+}

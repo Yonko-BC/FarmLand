@@ -3,6 +3,9 @@ import React, { useRef, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
 import { DivWrap, FormInput } from '../SignIn/SignInElements';
+import { createInvestmentPool, invest, mintLand, signer_address , contract,contract_address } from '../../interacting/main'
+import { id } from '../ContainerLand';
+import { ethers } from "ethers";
 
 const Background = styled.div`
   width: 1190px;
@@ -12,7 +15,7 @@ const Background = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: -90rem;
+  margin-top: -40rem;
 `;
 
 const ModalWrapper = styled.div`
@@ -123,7 +126,6 @@ const CloseModalButton = styled(MdClose)`
 `;
 
 
-
 function ModalInvest({ showModalInvest, setShowModalInvest }) {
     const modalRef = useRef();
 
@@ -153,18 +155,32 @@ function ModalInvest({ showModalInvest, setShowModalInvest }) {
     [keyPress]
   );
 
-  return (
-    <>
-      {showModalInvest ? (
+  async function createInvestmentPool(landId,budgeteth){
+    // const landId = 4
+    const budget = ethers.utils.parseEther(budgeteth)
+    const last_delay_for_investment_in_day = 4
+    const max_investor = 30
+    // approving ...
+    const approve = await contract.approve(contract_address, landId)
+    console.log("PROVED");
+    const createInvestmentPool_TX = await contract.createInvestmentPool(landId, budget, last_delay_for_investment_in_day, max_investor)
+    console.log("Pool created!");
+}
+
+  return ( 
+    <>{console.log('id modal',id)}
+      {
+      showModalInvest ? (
         <Background onClick={closeModal} ref={modalRef}>
          
             <ModalWrapper showModalInvest={showModalInvest}>
               {/* <ModalImg src={require('./Modal.png')} alt='camera' /> */}
               {/* <div>detail</div> */}
-              <ModalContent>
+              <ModalContent> 
                 <h1>Launch land Project</h1>
                 <p className='para'>Set the project information of your next launch.</p>
-                <div className='landId'><h4>Land Id : </h4><p>land#00001</p></div>
+                <div className='landId'><h4>Land Id : </h4><p>{id}</p></div>
+                
                 <DivWrap className="wrap-input100 validate-input m-b-16" data-validate="Valid Number is required">
                 <h5>Pudget :  </h5><FormInput className='inputForm' type="number" placeholder="ETH" min="10" max="100" required/>
             </DivWrap>
@@ -174,7 +190,7 @@ function ModalInvest({ showModalInvest, setShowModalInvest }) {
           <DivWrap className="wrap-input100 validate-input m-b-16" data-validate="Password is required"> 
           <h5>number of investor : &nbsp;&nbsp;  </h5> <FormInput  type="number" placeholder="Max number" min="1" max="30"  required/>    
           </DivWrap>
-                <button>Join Now</button>
+                <button onClick={()=>{createInvestmentPool(id,'50')}} >creat Project Pool</button>
               </ModalContent>
               <CloseModalButton
                 aria-label='Close modal'

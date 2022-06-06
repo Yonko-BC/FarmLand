@@ -2,8 +2,9 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
+import { withdrawPool } from '../../interacting/main';
 
-const Background = styled.div`
+const Background = styled.div`  
   width: 1190px;
   height: 930px;
   background: rgba(0, 0, 0, 0.8);
@@ -26,7 +27,7 @@ const ModalWrapper = styled.div`
   position: relative;
   z-index: 10;
   border-radius: 10px;
-  /* margin-top: 60rem; */
+  margin-top: 60rem;
 `;
 
 // const ModalImg = styled.img`
@@ -96,6 +97,7 @@ function ModalPool({ showModalPool, setShowModalPool }) {
     [keyPress]
   );
 
+
   return (
     <>
       {showModalPool ? (
@@ -107,7 +109,7 @@ function ModalPool({ showModalPool, setShowModalPool }) {
               <ModalContent>
                 <h1>Are you ready? Pool Money </h1>
                 <p>Get exclusive access to our next launch.</p>
-                <button>Join Now</button>
+                <button onClick={withdrawPool}>withdrawPool</button>
               </ModalContent>
               <CloseModalButton
                 aria-label='Close modal'

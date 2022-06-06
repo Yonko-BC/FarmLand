@@ -1,14 +1,16 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 // import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import {SidebarData} from './SidebarData'
 import { NavLogo} from '../Navbar/NavbarElements'
 import logo from '../../images/logoFL.png'
 import { ButtonR } from '../ButtonElement'
+import * as MdIcons from 'react-icons/md';
 
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import { ethers } from 'ethers';
+import { getMinter, signer_address } from '../../interacting/main';
 
 function Navbar() {
 
@@ -18,7 +20,7 @@ function Navbar() {
     const style = {fontSize: "1.2lem" , strokeWidth: "80" }
 
 
-
+    
 
 
 const { ethereum } = window;
@@ -42,7 +44,7 @@ const[walletAddress,setWalletAddress] = useState("");
 
 
 
-async function requestAccount(){
+ async function requestAccount(){
   // console.log('Requesting account ...');
  //XCheck if Meta Mask Extension exists
   if(window.ethereum){
@@ -60,7 +62,19 @@ async function requestAccount(){
  }
 }
 
+var minter = "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
+
+// useEffect(async ()=>{
+//   const minterA = await getMinter()
+//   minter = minterA
+  
+//   console.log("minter",minter);
+// },[])
+
+
 window.onload=requestAccount()
+
+
 
 /////////////
 
@@ -171,7 +185,6 @@ await isMetaMaskConnected().then((connected) => {
   return (
     <>
     
-
         <div className="navbar">
         <div className="login"  >
                      {/* <Link to='/signin'>
@@ -213,13 +226,22 @@ await isMetaMaskConnected().then((connected) => {
                 );
                 })} 
 
-
-            {/* <li className="logout">
-                     <Link to='/signin'>
-                          <AiIcons.AiOutlineLogout  onClick={showSidebar} style={style}/>
-                          <span>Log Out</span>
+              {
+                walletAddress === "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc"?(
+                  
+                  <li className="nav-text">
+                     <Link to='/mint'>
+                     <MdIcons.MdSupportAgent color="black"/>
+                          <span>Admin</span>
                      </Link>
-             </li> */}
+             </li>
+             
+                ):
+                  (
+                    console.log("not admin")
+                  )
+              }
+            
             </ul>
         </nav>
         </div>
