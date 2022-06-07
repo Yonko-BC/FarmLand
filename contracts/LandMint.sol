@@ -13,13 +13,16 @@ contract MintLand is ERC721URIStorage {
     // ---------------------- Var -------------
     Counters.Counter public _tokenIds;
     Counters.Counter public _investementIds;
+
     mapping(uint256 => LAND) public IdToLand;
     mapping(uint256 => INVESTMENT) private idToInvestmentPool;
-    mapping(uint256 => uint256) private InvestmentPoolBalance;
+    mapping(uint256 => uint256) public InvestmentPoolBalance;
     mapping(address => mapping(uint256 => uint256)) public InvestorBalance;
     mapping(uint256 => bool) private IsLandOnSell;
     mapping(address => uint256[]) private investorPool;
+
     address public minterAddress;
+
     struct LAND {
         uint256 id;
         address owner;
@@ -52,11 +55,13 @@ contract MintLand is ERC721URIStorage {
         address indexed landOwner,
         string landURI
     );
+
     event investPoolCreated(
         uint256 indexed investRId,
         address indexed owner,
         uint256 indexed landId
     );
+
     event newInvestor(uint256 indexed investPoolId, address indexed investor);
     event loanWithdraw(uint256 indexed investPoolId, address indexed landOwner);
     event loanPaied(uint256 indexed investPoolId, address indexed landOwner);

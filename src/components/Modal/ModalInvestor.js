@@ -6,6 +6,7 @@ import {FaEthereum} from 'react-icons/fa';
 import { createInvestmentPool, invest, mintLand, signer_address , contract } from '../../interacting/main'
 
 import { DivWrap, FormInput } from '../SignIn/SignInElements';
+import { budget, delay, idPool, landId, MaxInvestor, minEntry } from '../MarketLand';
 
 
 const Background = styled.div`
@@ -16,7 +17,7 @@ const Background = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: -30rem;
+  margin-top: -2rem;
 `;
 
 const ModalWrapper = styled.div`
@@ -130,7 +131,6 @@ function ModalInvestor({ showModalInvestor, setShowModalInvestor }) {
     const modalRef = useRef();
 
 
-
   const closeModal = e => {
     if (modalRef.current === e.target) {
       setShowModalInvestor(false);
@@ -189,7 +189,17 @@ function ModalInvestor({ showModalInvestor, setShowModalInvestor }) {
 
 
   /* ********************************************** */
-
+  var timeMinEntry
+  function getPrice() {
+    var  buttonValue =  document.getElementById('timeMinEntry').value;
+    // console.log('id : ',buttonValue)  
+  
+  
+    timeMinEntry=buttonValue
+    
+  
+  console.log('timeMinEntry : ',timeMinEntry)  
+  }  
   return (
     <>
       {showModalInvestor ? (
@@ -200,21 +210,27 @@ function ModalInvestor({ showModalInvestor, setShowModalInvestor }) {
               {/* <div>detail</div> */}
               <ModalContent>
                 <h1>Invest project </h1> 
-                <p className='para'>Set the project information of your next launch.</p>
-                <div className='landId'><h4>Land Id : </h4><p>land#00001</p></div>
-                <div className='landId'><h4>Pudget : </h4><p>21 &nbsp;&nbsp; Eth &nbsp;&nbsp;&nbsp;&nbsp; <FaEthereum/></p></div>
-                <div className='landId'><h4>Time : </h4><p id="demo"> </p></div>
+                {/* <p className='para'>Set the project information of your next launch.</p> */}
+                <p></p>
+                <div className='landId'><h4>Land Id : </h4><p>land#000{landId}</p></div>
+                <div className='landId'><h4>&nbsp;Pudget : </h4><p>{budget}&nbsp; Eth &nbsp;&nbsp;&nbsp;&nbsp; <FaEthereum/></p></div>
+                <div className='landId'><h4>&nbsp;Min Entry : </h4><p>{minEntry}&nbsp; Eth &nbsp;&nbsp;&nbsp;&nbsp; <FaEthereum/></p></div>
+
+                <div className='landId'><h4>Delay : </h4> <p>{delay/3600/24}  &nbsp;&nbsp;</p><p id="demo"> days </p>&nbsp;&nbsp;&nbsp;</div>
 
                 {/* <DivWrap className="wrap-input100 validate-input m-b-16" data-validate="Valid Number is required">
                 <h5>Pudget :  </h5><FormInput className='inputForm' type="number" placeholder="ETH" min="10" max="100" required/>
             </DivWrap> */}
+         
           <DivWrap className="wrap-input100 validate-input m-b-16" data-validate="Password is required"> 
-          <h5>Delay : &nbsp;&nbsp;  </h5> <FormInput className='inputForm' type="number" placeholder="day" min="1" max="30"  required/>    
+          <h4>multiply of minEntry : &nbsp;&nbsp;  </h4> <FormInput id='timeMinEntry'  type="number" placeholder="Max number" min="1" max={MaxInvestor}  required/> 
+   
           </DivWrap>
-          <DivWrap className="wrap-input100 validate-input m-b-16" data-validate="Password is required"> 
-          <h5>number of investor : &nbsp;&nbsp;  </h5> <FormInput  type="number" placeholder="Max number" min="1" max="30"  required/>    
-          </DivWrap>
-                <button onClick={invest}>invest in</button>
+          {/* <div className='landId'><h4>ETH invest : </h4> <p>{getPrice()*minEntry}</p><p id="demo"> </p>&nbsp;&nbsp;&nbsp;</div> */}
+
+                <button onClick={()=>{
+                  getPrice()
+                  invest(idPool,timeMinEntry)}}>invest in</button>
               </ModalContent>
               <CloseModalButton
                 aria-label='Close modal'

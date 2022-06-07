@@ -40,6 +40,8 @@ const Button = styled.button`
   margin-left: 13rem !important;
   margin-top: -1.5rem;
 `;
+ 
+export var idPool,landId,delay,budget,MaxInvestor,minEntry,owner,statu
 
 const ContainerLand = () => {
 
@@ -56,11 +58,11 @@ const [showModalInvestor, setShowModalInvestor] = useState(false);
 
 const openModalInvestor = () => {
   setShowModalInvestor(prev => !prev); 
-
+  
 };   
 const [invests, setInvests] = useState([]);
- 
-const [newVari, setNewVari] = useState([]);
+  
+const [newVari, setNewVari] = useState([]);  
 const [filtrer, setFilterer] = useState([]);
 
 invests.forEach(i => {
@@ -73,7 +75,7 @@ if(!filtrer.includes(Number(i.id.toString())) ){
 } 
 });
 
-console.log('varii',newVari); 
+console.log('Pool All detail',newVari); 
  
  
 useEffect(() => {
@@ -95,45 +97,127 @@ useEffect(() => {
   
    getMarketPlace();
 }, []);
-  
-console.log(invests);      
+    
+// console.log(invests);      
 
+
+async function getIdPool(e) {
+  var  buttonValue = await document.getElementById('investBtn').value;
+if(buttonValue=e){
+  idPool=buttonValue
+}
+console.log('idPool : ',idPool)  
+}
+///////////////////////
+async function getLandId(e) {
+  var  buttonValue = await document.getElementById('investBtn').getAttribute('landId');
+if(buttonValue=e){
+  landId=buttonValue 
+}
+console.log('landId : ',landId)  
+}
+///////////////////////
+async function getDelay(e) {
+  var  buttonValue = await document.getElementById('investBtn').getAttribute('data-delay');
+if(buttonValue=e){
+  delay=buttonValue
+}
+console.log('delay : ',delay)  
+}
+///////////////////////
+async function getBudget(e) {
+  var  buttonValue = await document.getElementById('investBtn').getAttribute('data-budget');
+if(buttonValue=e){
+  budget=buttonValue
+}
+console.log('budget : ',budget)  
+}
+///////////////////////
+async function getMaxInvestors(e) {
+  var  buttonValue = await document.getElementById('investBtn').getAttribute('data-MaxInvestor');
+if(buttonValue=e){
+  MaxInvestor=buttonValue
+}
+console.log('MaxInvestor : ',MaxInvestor)  
+}
+///////////////////////
+async function getMinEntry(e) {
+  var  buttonValue = await document.getElementById('investBtn').getAttribute('data-minEntry');
+if(buttonValue=e){
+  minEntry=buttonValue
+}
+console.log('minEntry : ',minEntry)  
+}
+///////////////////////
+async function getowner(e) {
+  var  buttonValue = await document.getElementById('investBtn').getAttribute('data-owner');
+if(buttonValue=e){
+  owner=buttonValue
+}
+console.log('owner : ',owner)     
+}
+///////////////////////
+async function getstatus(e) {
+  var  buttonValue = await document.getElementById('investBtn').getAttribute('data-statu');
+if(buttonValue=e){
+  statu=buttonValue
+}
+console.log('status : ',statu)  
+}
+///////////////////////
+ 
+ 
     return ( 
         <> 
      
       <LandContainer id='test'> 
-        
+         
       {/* <Container> */}
         {/* <Button onClick={openModal}>I'm a modal</Button> */}
         <ModalDetail showModalDetail={showModalDetail} setShowModalDetail={setShowModalDetail} />
         <ModalInvestor showModalInvestor={showModalInvestor} setShowModalInvestor={setShowModalInvestor} />
-  
-    
-        {/* <GlobalStyle /> */}
-      {/* </Container> */} 
-          <LandH1>WE WANT IT HERE  </LandH1>
+   
+     
+        {/* <GlobalStyle /> */} 
+      {/* </Container> */}       
+          <LandH1>Marketplace  </LandH1>
           {/* {openModal && <Modal closeModal={setOpenModal}/>} */}
          
           <LandWrapper>
     
-          {newVari.length > 0 ? (
+          {newVari.length > 0 ? ( 
         newVari.map((invest) => {
           // console.log("detailed",pools[invest-1].id.toString());
-          // console.log("alndID",invest.toString())
-          //console.log("HOW MUCH !");      
-          return (
+          // console.log("alndID",invest.toString()) 
+          //console.log("HOW MUCH !"); 
           
+          if(invest.status.toString()==='0'){
+          return ( 
+            <> 
               <LandCard> 
                     
                   <Button onClick={openModalDetail}>< AiFillExclamationCircle color="black"/></Button>
                   
                   <LandIcon src={Icon1}/>  
-                  <LandH2>Land#. {invest.id.toString()}</LandH2>
-                  <div> <LandPosition> <FaMapMarker/> Position : ( 2.333 , 3.476 )</LandPosition>
-                  <LandSurface>&nbsp;&nbsp;<FaMapMarker/> Surface : 1530 m2 </LandSurface>
-                  </div>
+                  <LandH2><h5>&nbsp;&nbsp;Land#000{invest.id.toString()}</h5></LandH2>
+                  
+                  <div> <p> </p>
+                    {/* <p>  delay : {invest.lastDelayForInvestInDays.toString()}</p> */}
+                    <p>Total Budget : {invest.totalBudget.toString()/Math.pow(10,18)} ETH </p>
+                    {/* <p> Min Entry : {invest.minEntry.toString()/Math.pow(10,18)} ETH </p> */}
+ 
+                  </div> 
                  
-                  <Btn to='/signup'  primary='true' onClick={openModalInvestor}>
+                  <Btn to='/signup' value={invest.id.toString()} data-landId={invest.landId.toString()} data-delay={invest.lastDelayForInvestInDays.toString()} data-MaxInvestor={invest.maxInvestors.toString()} data-minEntry={invest.minEntry.toString()/Math.pow(10,18)} data-owner={invest.owner.toString()} data-statu={invest.status.toString()} data-budget={invest.totalBudget.toString()/Math.pow(10,18)}   primary='true' id='investBtn' onClick={()=>{
+                    getBudget(invest.totalBudget.toString()/Math.pow(10,18))
+                    getstatus(invest.status.toString())
+                    getowner(invest.owner.toString())
+                    getMinEntry(invest.minEntry.toString()/Math.pow(10,18))
+                    getMaxInvestors(invest.maxInvestors.toString())
+                    getDelay(invest.lastDelayForInvestInDays.toString())
+                    getLandId(invest.landId.toString())
+                    getIdPool(invest.id.toString())
+                    openModalInvestor()}}>
                        Invest
                   </Btn>   
                   {/* <Btn  primary='true' onClick={invest}>
@@ -141,7 +225,8 @@ console.log(invests);
                   </Btn>    */}
 
               </LandCard>
-       );
+              </>
+       );} 
       })
     ) : (
       <h1>NO DATA</h1>
@@ -150,11 +235,11 @@ console.log(invests);
           </LandWrapper>
       </LandContainer>
       </>
-  
-      )
+    
+      ) 
   }
   
-  export default ContainerLand
+  export default ContainerLand  
 
 
   

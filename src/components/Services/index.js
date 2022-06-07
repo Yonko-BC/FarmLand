@@ -11,23 +11,23 @@ const Services = () => {
         <ServicesWrapper>
             <ServicesCard>
                 <ServicesIcon src={Icon1}/>
-                <ServicesH2>Reduce expenses</ServicesH2>
-                <ServicesP>we help reduce your fees and increase your overall revenue.</ServicesP>
+                <ServicesH2>Register Land</ServicesH2>
+                <ServicesP>register your land in our Blockchain without all the paperwork in the real life.</ServicesP>
             </ServicesCard>
             <ServicesCard>
                 <ServicesIcon src={Icon2}/>
-                <ServicesH2>Reduce expenses</ServicesH2>
-                <ServicesP>we help reduce your fees and increase your overall revenue.</ServicesP>
+                <ServicesH2>Buy / Sell Land</ServicesH2>
+                <ServicesP>buy and sell lands easier than ever without any intermediary in between to verify the transaction process.</ServicesP>
             </ServicesCard>
             <ServicesCard>
                 <ServicesIcon src={Icon3}/>
-                <ServicesH2>Reduce expenses</ServicesH2>
-                <ServicesP>we help reduce your fees and increase your overall revenue.</ServicesP>
+                <ServicesH2>Rent Land</ServicesH2>
+                <ServicesP>find land for rent without any problems that you may deal with in the real life process.</ServicesP>
             </ServicesCard>
             <ServicesCard>
                 <ServicesIcon src={Icon3}/>
-                <ServicesH2>Reduce expenses</ServicesH2>
-                <ServicesP>we help reduce your fees and increase your overall revenue.</ServicesP>
+                <ServicesH2>Investment Land</ServicesH2>
+                <ServicesP>make an investment in a project where you register your property and make an announcement that describes your project.</ServicesP>
             </ServicesCard>
         </ServicesWrapper>
     </ServicesContainer>

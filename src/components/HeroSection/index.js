@@ -21,13 +21,11 @@ const HeroSection = () => {
           </HeroBg>
           <HeroContent>
               <HeroH1>
-                    Virtual Banking Made Easy
+                    Virtual Land Registration Made Easy
               </HeroH1>
               <HeroP>
-              Virtual Banking Made EasyVirtual Banking Made
-               Virtual Banking Made EasyEasyVirtual 
-               Banking Made EasyVirtual Banking Made EasyVirtu
-               al Banking Made Easy.
+              Land registry in morocco as well as in many parts of the world is a very slow and inconvenient process.
+and here where our app's take place.
               </HeroP>
               <HeroBtnWrapper>
                   <ButtonR to='/signup' onMouseEnter={onHover} onMouseLeave={onHover}

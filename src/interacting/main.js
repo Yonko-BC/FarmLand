@@ -888,7 +888,7 @@ const contract_abi = [
   }
 ]
 
-export const contract_address = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+export const contract_address = "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853"
 const userAddress = "0xBcd4042DE499D14e55001CcbB24a551F3b954096"
  export const contract = new ethers.Contract(contract_address, contract_abi,signer)
 
@@ -919,10 +919,10 @@ export async function createInvestmentPool(a){
     console.log("Pool created!");
 }
 
-export async function invest() {
+export async function invest(investmentPoolId,priceMale) {
 
-    const investmentPoolId = 2
-    const priceMale = 1
+    // const investmentPoolId = 2
+    // const priceMale = 1
     const miniEntry = await contract.getMiniEntry(investmentPoolId)
     const converted_miniEntry = ethers.utils.formatEther(miniEntry)
     const amount = ethers.utils.parseEther(`${converted_miniEntry * priceMale}`)
@@ -932,19 +932,25 @@ export async function invest() {
 
 
 
-export async function withdrawPool() {
+export async function withdrawPool(investmentPoolId) {
   // [owner, account1, account2, account3] = await ethers.getSigners()
-  const investmentPoolId = 1
+  // const investmentPoolId = 1
   const withdrawPool_TX = await contract.withdrawPool(investmentPoolId)
   console.log("Withdrew");
 }
 
 
-export async function payTheLoan() {
+export async function payTheLoan(investmentPoolId,budgetEth) {
 
   // [owner, account1, account2, account3] = await ethers.getSigners()
-  const investmentPoolId = 1
-  const budget = ethers.utils.parseEther("55")
+  // const investmentPoolId = 1
+  const budget = ethers.utils.parseEther(budgetEth)
   const payTheLoan_TX = await contract.payTheLoan(investmentPoolId, { value: budget })
   console.log("Paied");
 }
+
+export async function investorBalance(investPoolId){
+  // const investPoolId = 1
+   const investor_balance = await contract.investorBalance(signer_address,investPoolId)
+}
+console.log('investorBalance(',investorBalance());

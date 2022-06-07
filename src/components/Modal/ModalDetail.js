@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
 import { contract, signer_address } from "../../interacting/main";
 import { id, owner, value } from '../ContainerLand';
+import { budget, landId, Owner } from '../PoolLand';
+import {FaEthereum} from 'react-icons/fa';
 
 
  
@@ -15,7 +17,7 @@ const Background = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: -10rem;
+  margin-top: -2rem;
 `;
 
 const ModalWrapper = styled.div`
@@ -49,13 +51,24 @@ const ModalContent = styled.div`
   color: #141414;
   p {
     margin-bottom: 1rem;
+    /* display: none; */
   }
-  button {
-    padding: 10px 24px;
-    background: #141414;
-    color: #fff;
-    border: none;
+  .landId{
+    display: flex;
+    margin-left: -2rem;
+margin-top: 2rem;
   }
+  .h4{
+    margin-right: 1rem;
+  }
+
+  h1{
+  
+    margin-top:-3rem;
+    margin-bottom: 2rem;
+  }
+  
+
 `;
 
 const CloseModalButton = styled(MdClose)`
@@ -156,6 +169,7 @@ function ModalDetail({ showModalDetail, setShowModalDetail }) {
    */
 
 
+  console.log('landId yoo',landId);
 
  
   return (
@@ -166,14 +180,13 @@ function ModalDetail({ showModalDetail, setShowModalDetail }) {
             <ModalWrapper showModalDetail={showModalDetail}>
               <ModalImg src={require('./Modal.png')} alt='camera' />
               <ModalContent>
-                <h1>Are you ready? DETAIL</h1>
-                <p>Get exclusive access to our next launch.</p>
-                <p>id : {id}</p>
-                <p>owner address : {owner}</p>
-                <p>land value : {value} ETH</p>
-
- 
-                <button>Join Now</button>
+                <h1>Land details</h1>
+                {/* <p>Get exclusive access to our next launch.</p> */}
+               <div className='landId'><h4>id :&nbsp;&nbsp;&nbsp;&nbsp;</h4> <p> {id}{landId}</p></div> 
+               <div className='landId'><h4>owner address :</h4>
+                </div> <p>{owner}{Owner}</p>
+                <div className='landId'><h4>&nbsp;Approximate Land Value : </h4><p>&nbsp;&nbsp;&nbsp;&nbsp; {value}{budget}&nbsp; Eth &nbsp;&nbsp;&nbsp;&nbsp; <FaEthereum/></p></div>
+                {/* <button>Join Now</button> */}
               </ModalContent>
               <CloseModalButton
                 aria-label='Close modal'

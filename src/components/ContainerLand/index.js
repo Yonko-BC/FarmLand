@@ -43,11 +43,11 @@ const Button = styled.button`
   font-size: 28px;    
   cursor: pointer;
   margin-left: 13rem !important; 
-  margin-top: -1.5rem; 
+  margin-top: -1.5rem;   
 `;
 
 export let id=[]; 
-export let owner=[]; 
+export let owner=[];  
 export let value=[]; 
  
 const ContainerLand = () => {
@@ -55,11 +55,11 @@ const ContainerLand = () => {
   const [showModalDetail, setShowModalDetail] = useState(false);
 
 
-  const openModalDetail = () => {  
+  const openModalDetail = () => {    
 
     setShowModalDetail((prev) => !prev);
     
-  };
+  };    
 
   const [showModalInvest, setShowModalInvest] = useState(false);
 
@@ -139,11 +139,11 @@ console.log('id : ',id)
 async function getOwner(e) {
   var  buttonValue = await document.getElementById('detailBtn').getAttribute('data-owner');
   // console.log('id : ',buttonValue)  
-
-if(buttonValue=e){ 
-  owner=buttonValue
   
-}
+if(buttonValue=e){  
+  owner=buttonValue
+       
+}  
 console.log('owner : ',owner)  
 }  
 
@@ -170,7 +170,7 @@ console.log('value : ',value)
   
     {/* <GlobalStyle /> */}
   {/* </Container> */} 
-      <LandH1>WE WANT IT HERE  </LandH1>
+      <LandH1>  Inventory   </LandH1>
       {/* {openModal && <Modal closeModal={setOpenModal}/>} */}
     
       <LandWrapper>
@@ -187,19 +187,19 @@ console.log('value : ',value)
 getId(invest.id.toString()) 
 getOwner(invest.owner)
 getValue(invest.value.toString()/Math.pow(10,18))
-openModalDetail()  
+openModalDetail()    
   }}>< AiFillExclamationCircle color="black"/></Button>     
               <LandIcon src={Icon1}/> 
               <LandH2>Land# {invest.id.toString()}</LandH2>
  
               {/* <LandH2>Land#. {invest.value.toString()/Math.pow(10,18)}</LandH2> */}
-              <div> <LandPosition> <FaMapMarker/> Position : ( 2.333 , 3.476 )</LandPosition>
+              {/* <div> <LandPosition> <FaMapMarker/> Position : ( 2.333 , 3.476 )</LandPosition>
               <LandSurface>&nbsp;&nbsp;<FaMapMarker/> Surface : 1530 m2 </LandSurface>
-              </div> 
+              </div>  */} 
              
               <Btn to='/signup'  primary='true' onClick={()=>{getId(invest.id.toString()) 
                 openModalInvest()}}>
-                   Invest
+                   Create Project 
               </Btn>   
               {/* <Btn  primary='true' onClick={invest}>
                    test  

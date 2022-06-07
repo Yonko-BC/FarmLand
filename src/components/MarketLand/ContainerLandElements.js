@@ -30,7 +30,7 @@ grid-template-columns: 1fr 1fr 1fr ;
 align-items: center;
 grid-gap: 16px;
 padding:0 50px;
-margin-bottom: 9rem !important;
+margin-bottom: 10rem !important;
 /* margin-left: 3rem; */
 
 

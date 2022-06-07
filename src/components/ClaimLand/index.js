@@ -6,7 +6,7 @@ import Icon3 from '../../images/crypto.png'
 import {LandContainer,LandH1,LandWrapper,LandSurface,LandPosition,LandCard,LandIcon,LandH2,LandP} from './ContainerLandElements'
 import { AiFillExclamationCircle } from 'react-icons/ai'
 import { FaMapMarker } from 'react-icons/fa'
-  
+
 import { Button as Btn } from '../ButtonElement'
 import { useState } from 'react'
 import ModalClaim from '../Modal/ModalClaim'
@@ -20,13 +20,35 @@ import styled from 'styled-components';
 
 
 
-// const Container = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   /* height: 100vh; */
-//   /* margin-top: 40rem; */
-// `;
+const BtnDisable = styled.button`
+
+/* cursor: none; */
+border-radius: 50px;
+    background: ${({primary})=>(primary ? 'black':'#010606')};
+    white-space: nowrap;
+    padding: ${({big})=>(big ? '16px 58px':'14px 48px')};
+    color: ${({dark})=>(dark ? '#010606':'#fff')};
+    font-size: ${({fontBig})=>(fontBig ? '20px':'16px')};
+    outline: none ;
+    border: none;
+    /* cursor: pointer; */
+    display: flex;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        text-decoration: none;
+
+        transition: all 0.2s ease-in-out;
+        background: ${({primary})=>(primary ? 'red':'#01BF71')};
+        
+        color: ${({dark})=>(dark ? '#010606':'white')};
+        cursor: not-allowed;
+
+    }
+`;
 
 const Button = styled.button`
   /* min-width: 100px; */
@@ -50,18 +72,24 @@ const [pools, setPools] = useState([]);
 
 
 const [newVari, setNewVari] = useState([]);
-var yo=-1
+const [filtrer, setFilterer] = useState([]);
+
 
 pools.forEach(i => {
  
-if(yo!==Number(i.id.toString()) ){
+if(!filtrer.includes(Number(i.id.toString())) ){
+  filtrer.push(Number(i.id.toString()))
+  
+  
+  console.log(Number(i.id.toString()));
   newVari.push(i)
-  yo=Number(i.id.toString())
-  console.log('yooooo',i);
-}
+  // yo=Number(i.id.toString())
+} 
 });
+// console.log('yooooo',newVari);
+console.log('filter',filtrer);
 
-
+// document.getElementById('disable').style.cursor='not-allowed'
 
 useEffect(() => {
   const getInvestorInvestments = async () => {
@@ -117,7 +145,7 @@ const openModalDetail = () => {
 
  function Status(statut_number) {
 if(  statut_number === '0'){
-    console.log("PROJECT CREATED");
+    // console.log("PROJECT CREATED");
     return 'Project Created'
 }
 else if( statut_number === '1'){
@@ -131,7 +159,8 @@ else if( statut_number === '3'){
 }
 }
 
-    
+  
+
     return (
         <>
      
@@ -147,7 +176,7 @@ else if( statut_number === '3'){
 
         {/* <GlobalStyle /> */}
       {/* </Container> */}
-          <LandH1>Claimment Lands</LandH1>
+          <LandH1>Claim rewards Lands</LandH1>
           {/* {openModal && <Modal closeModal={setOpenModal}/>} */}
         
           <LandWrapper>
@@ -155,10 +184,11 @@ else if( statut_number === '3'){
 
           {invests.length > 0 ? (
         invests.map((invest) => {
-          // console.log("detailed",pools[invest-1].id.toString());
+                // console.log("detailed",pools[invest-1].id.toString());
           // console.log("alndID",invest.toString())
           //console.log("HOW MUCH !");
           return (
+
             <LandCard>
             {/* <Modal showModal={showModal} setShowModal={setShowModal}/>
             <GlobalStyle /> */}
@@ -168,18 +198,18 @@ else if( statut_number === '3'){
             
 
 
-            <LandIcon src={Icon1}/>
+            <LandIcon src={Icon1}/> 
             <LandH2>Land Id : {newVari[invest - 1].id.toString()}</LandH2>
-            <div> <LandPosition> <FaMapMarker/> Statue : {Status(newVari[invest - 1].status.toString())}</LandPosition>
-            <LandSurface>&nbsp;&nbsp;<FaMapMarker/> Time : {(newVari[invest - 1].createdAt.toString())} </LandSurface>
+            <div> <LandPosition>  Statue : {Status(newVari[invest - 1].status.toString())}</LandPosition>
+            <LandSurface>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time : {(newVari[invest - 1].createdAt.toString())} s</LandSurface>
             </div>
            { newVari[invest - 1].status.toString() === "2" ? (
-             <Btn to='/signup'  primary='true' onClick={() => claim(newVari[invest - 1].id.toString())} >
+             <Btn   primary='true' onClick={() => claim(newVari[invest - 1].id.toString())} >
              Claim
           </Btn>) : (
-            <Btn to='/signup'  primary='true' onClick={() => claim(newVari[invest - 1].id.toString())} >
-            No Claim
-         </Btn> 
+            <BtnDisable  id='disable'  primary='true' >
+            Claim
+         </BtnDisable> 
           )
            }
               

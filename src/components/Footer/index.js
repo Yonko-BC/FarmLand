@@ -14,10 +14,10 @@ const Footer = () => {
                     <FooterLinkItems>
                         <FooterLinkTitle>About Us </FooterLinkTitle>
 
-                            <FooterLink to='/signin'>About us</FooterLink>
-                            <FooterLink to='/signin'>About us</FooterLink>
-                            <FooterLink to='/signin'>About us</FooterLink>
-                            <FooterLink to='/signin'>About us</FooterLink>
+                            <FooterLink to='/signin'>Register Land</FooterLink>
+                            <FooterLink to='/signin'>Buy/Sell Land</FooterLink>
+                            <FooterLink to='/signin'>Renting Land</FooterLink>
+                            <FooterLink to='/signin'>Lanch investment</FooterLink>
 
                     </FooterLinkItems>
 

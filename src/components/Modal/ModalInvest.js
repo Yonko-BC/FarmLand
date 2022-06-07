@@ -15,7 +15,7 @@ const Background = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: -40rem;
+  margin-top: -2rem;
 `;
 
 const ModalWrapper = styled.div`
@@ -32,7 +32,7 @@ const ModalWrapper = styled.div`
   position: relative;
   z-index: 10;
   border-radius: 10px;
-  /* margin-top: 60rem; */
+  margin-top: 2rem;
 `;
 
 // const ModalImg = styled.img`
@@ -155,17 +155,56 @@ function ModalInvest({ showModalInvest, setShowModalInvest }) {
     [keyPress]
   );
 
-  async function createInvestmentPool(landId,budgeteth){
+  async function createInvestmentPool(landId,budgeteth,delayDay,MaxInvestor){
     // const landId = 4
     const budget = ethers.utils.parseEther(budgeteth)
-    const last_delay_for_investment_in_day = 4
-    const max_investor = 30
+    const last_delay_for_investment_in_day = delayDay
+    const max_investor = MaxInvestor
     // approving ...
     const approve = await contract.approve(contract_address, landId)
     console.log("PROVED");
     const createInvestmentPool_TX = await contract.createInvestmentPool(landId, budget, last_delay_for_investment_in_day, max_investor)
     console.log("Pool created!");
 }
+
+var delay
+var budget
+var numberinvestor
+
+function getDelay() {
+  var  buttonValue =  document.getElementById('delay').value;
+  // console.log('id : ',buttonValue)  
+
+
+  delay=buttonValue
+  
+
+console.log('delay : ',delay)  
+}  
+
+   function getBudget() {
+    var  buttonValue =  document.getElementById('budget').value;
+    // console.log('id : ',buttonValue)  
+  
+
+    budget=buttonValue
+    
+  
+  console.log('budget : ',budget)  
+  }  
+
+  function getNumberInvestor() {
+    var  buttonValue =  document.getElementById('number').value;
+    // console.log('id : ',buttonValue)  
+  
+
+    numberinvestor=buttonValue
+    
+  
+  console.log('number investor : ',numberinvestor)  
+  }  
+
+
 
   return ( 
     <>{console.log('id modal',id)}
@@ -182,15 +221,19 @@ function ModalInvest({ showModalInvest, setShowModalInvest }) {
                 <div className='landId'><h4>Land Id : </h4><p>{id}</p></div>
                 
                 <DivWrap className="wrap-input100 validate-input m-b-16" data-validate="Valid Number is required">
-                <h5>Pudget :  </h5><FormInput className='inputForm' type="number" placeholder="ETH" min="10" max="100" required/>
+                <h5>Pudget :  </h5><FormInput id='budget' className='inputForm' type="number" placeholder="ETH" min="10" max="100" required/>
             </DivWrap>
           <DivWrap className="wrap-input100 validate-input m-b-16" data-validate="Password is required"> 
-          <h5>Delay : &nbsp;&nbsp;  </h5> <FormInput className='inputForm' type="number" placeholder="day" min="1" max="30"  required/>    
+          <h5>Delay : &nbsp;&nbsp;  </h5> <FormInput id='delay' className='inputForm' type="number" placeholder="day" min="1" max="30"  required/>    
           </DivWrap>
           <DivWrap className="wrap-input100 validate-input m-b-16" data-validate="Password is required"> 
-          <h5>number of investor : &nbsp;&nbsp;  </h5> <FormInput  type="number" placeholder="Max number" min="1" max="30"  required/>    
+          <h5>number of investor : &nbsp;&nbsp;  </h5> <FormInput id='number'  type="number" placeholder="Max number" min="1" max="30"  required/>    
           </DivWrap>
-                <button onClick={()=>{createInvestmentPool(id,'50')}} >creat Project Pool</button>
+                <button onClick={()=>{
+                  getNumberInvestor()
+                  getBudget()
+                  getDelay()
+                  createInvestmentPool(id,budget,delay,numberinvestor)}} >creat Project Pool</button>
               </ModalContent>
               <CloseModalButton
                 aria-label='Close modal'

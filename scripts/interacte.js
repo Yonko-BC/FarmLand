@@ -887,6 +887,8 @@ const contract_address = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
 //const erc_721 = new ethers.Contract(contract_address, erc_721_abi)
 
 const contract = new ethers.Contract(contract_address, contract_abi)
+
+
 async function getAddress(){
   [owner, account1, account2, account3,account4] = await ethers.getSigners()
   console.log('owner',owner.address);
@@ -1022,7 +1024,8 @@ const getAllInvestmentPools = async () => {
   };
 
   async function investorBalance(){
-    investor_balance = await contract.investorBalance(signerAddress,investPoolId)}
+    investor_balance = await contract.investorBalance(signerAddress,investPoolId)
+  }
 
 
      async function getMinter(){
@@ -1051,3 +1054,10 @@ const getAllInvestmentPools = async () => {
 // getAddress()
 
 getMinter()
+
+
+// npx hardhat compile => compile
+// npx hardhat run scripts/deploy.js --network localhost => run scripts bach deployer smart contract
+// npx hardhat node = > create local blockchain
+
+// npx hardhat test test/sample-test.js --network localhost => run scripts bach dir les test ela smart contract

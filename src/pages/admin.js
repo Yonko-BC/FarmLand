@@ -15,7 +15,11 @@ const Container = styled.body`
   background-image: linear-gradient(to top,rgb(2, 27, 3),rgba(12, 104, 7, 0.911),rgb(255, 255, 255));
 
 `
-
+const H1 = styled.h1`
+justify-content: center;
+align-items: center;
+margin-left: 40rem;
+`
 
 const Div = styled.div`
  box-shadow: 0px -4px 14px -1px rgba(255, 255, 255, 0.514);
@@ -38,6 +42,7 @@ div{
  margin-left: 5rem;
 }
 h4{
+  margin-bottom: -0.3rem;
   margin-left: 2rem;
   color: white;
 align-items:center;
@@ -50,13 +55,14 @@ justify-content: center;
       color: white;
       width: 80%;
     padding: 10px 8px;
-    margin-bottom: 40px;
+    margin-bottom: 55px;
     /* margin: 5px 0; */
     border: 0;
     /* color: aliceblue; */
     border-bottom: 1px solid rgb(198, 193, 193);
     outline: none;
     background: transparent;
+  
     }
   `
 
@@ -77,7 +83,7 @@ const ButtonMint = styled.button`
     justify-content: center;
     align-items: center;
     transition: all 0.2s ease-in-out;
-margin-top: 3rem;
+margin-top: 1.5rem;
 margin-left: 8.5rem;
 
 /* margin-left: 50rem; */
@@ -123,7 +129,7 @@ var value
   return (
     <>
     <Navbar/>
-
+<H1>Registry & Mint Lands</H1>
     <Container>
          <Div >
 <div> <h4>Land Owner adress : </h4>

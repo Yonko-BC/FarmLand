@@ -4,24 +4,24 @@ const { deployMintLand } = require("../scripts/deploy")
 
 
 
-// describe("Mint", function () {
-//   it("the _landOwner should be the owner of the token 1", async function () {
-//     [owner, account1, account2, account3] = await ethers.getSigners()
-//     const contract =  await deployMintLand()
-//     const landValue  = ethers.utils.parseEther("500")
-//     const mint = await contract.connect(account1).mintLand(account2.address,"uri",landValue)
-//     console.log(account2.address);
-//     const userBalance = await contract.userBalance(account2.address)
-//     expect(userBalance).to.equal(1)
-//   });
-//   it("Should revert if someone else try to mint the land", async function () {
-//     [owner, account1, account2, account3] = await ethers.getSigners()
-//     const contract =  await deployMintLand()
-//     const landValue  = ethers.utils.parseEther("500")
-//     await expect( contract.connect(account2).mintLand(account2.address,"uri",landValue)).to.be.revertedWith("only minter")
-//   });
+describe("Mint", function () {
+  it("the _landOwner should be the owner of the token 1", async function () {
+    [owner, account1, account2, account3] = await ethers.getSigners()
+    const contract =  await deployMintLand()
+    const landValue  = ethers.utils.parseEther("500")
+    const mint = await contract.connect(account2).mintLand(account2.address,"uri",landValue)
+    console.log(account2.address);
+    const userBalance = await contract.userBalance(account2.address)
+    expect(userBalance).to.equal(1)
+  });
+  it("Should revert if someone else try to mint the land", async function () {
+    [owner, account1, account2, account3] = await ethers.getSigners()
+    const contract =  await deployMintLand()
+    const landValue  = ethers.utils.parseEther("500")
+    await expect( contract.connect(account1).mintLand(account2.address,"uri",landValue)).to.be.revertedWith("only minter")
+  });
 
-// });
+});
 
 
 // describe("Create investment pool", function () {
@@ -300,39 +300,39 @@ const { deployMintLand } = require("../scripts/deploy")
 // })
 
 
-describe("claim", function () {
-  it("Should revert if it's not paied", async function () {
-    [owner, account1, account2, account3] = await ethers.getSigners()
-    const contract = await deployMintLand()
-    const landValue = ethers.utils.parseEther("100")
-    const budget = ethers.utils.parseEther("100")
-    const mint = await contract.connect(account1).mintLand(account2.address, "uri", landValue)
-    const approve = await contract.connect(account2).approve(contract.address, 1)
-    const create = await contract.connect(account2).createInvestmentPool(1, landValue, 1, 30)
-    const invest = await contract.connect(account3).invest(0,{value:landValue})
-    const withraw = await contract.connect(account2).withdrawPool(0)
-    //const pay = await contract.connect(account2).payTheLoan(0,{value:budget})
-    //const sell = await contract.connect(account1).sellLand(0)
-   // await network.provider.send("evm_increaseTime", [32000000])
-    await expect(contract.connect(account3).claim(0)).to.be.revertedWith("not paied")
-  })
-  it("Should revert if caller is not aminter", async function () {
-    [owner, account1, account2, account3] = await ethers.getSigners()
-    const contract = await deployMintLand()
-    const landValue = ethers.utils.parseEther("100")
-    const budget = ethers.utils.parseEther("120")
-    const mint = await contract.connect(account1).mintLand(account2.address, "uri", landValue)
-    const approve = await contract.connect(account2).approve(contract.address, 1)
-    const create = await contract.connect(account2).createInvestmentPool(1, landValue, 1, 30)
-    // console.log(await ethers.getBalance());
-    const invest = await contract.connect(account3).invest(0,{value:landValue})
-    // console.log(await ethers.getBalance());
-    const withraw = await contract.connect(account2).withdrawPool(0)
-    const pay = await contract.connect(account2).payTheLoan(0,{value:budget})
-    console.log(await contract.getContractBalance())
-    const claim = await contract.connect(account3).claim(0)
-   // await network.provider.send("evm_increaseTime", [32000000])
-    expect(1).to.equal(1)
-  })
+// describe("claim", function () {
+//   it("Should revert if it's not paied", async function () {
+//     [owner, account1, account2, account3] = await ethers.getSigners()
+//     const contract = await deployMintLand()
+//     const landValue = ethers.utils.parseEther("100")
+//     const budget = ethers.utils.parseEther("100")
+//     const mint = await contract.connect(account1).mintLand(account2.address, "uri", landValue)
+//     const approve = await contract.connect(account2).approve(contract.address, 1)
+//     const create = await contract.connect(account2).createInvestmentPool(1, landValue, 1, 30)
+//     const invest = await contract.connect(account3).invest(0,{value:landValue})
+//     const withraw = await contract.connect(account2).withdrawPool(0)
+//     //const pay = await contract.connect(account2).payTheLoan(0,{value:budget})
+//     //const sell = await contract.connect(account1).sellLand(0)
+//    // await network.provider.send("evm_increaseTime", [32000000])
+//     await expect(contract.connect(account3).claim(0)).to.be.revertedWith("not paied")
+//   })
+//   it("Should revert if caller is not aminter", async function () {
+//     [owner, account1, account2, account3] = await ethers.getSigners()
+//     const contract = await deployMintLand()
+//     const landValue = ethers.utils.parseEther("100")
+//     const budget = ethers.utils.parseEther("120")
+//     const mint = await contract.connect(account1).mintLand(account2.address, "uri", landValue)
+//     const approve = await contract.connect(account2).approve(contract.address, 1)
+//     const create = await contract.connect(account2).createInvestmentPool(1, landValue, 1, 30)
+//     // console.log(await ethers.getBalance());
+//     const invest = await contract.connect(account3).invest(0,{value:landValue})
+//     // console.log(await ethers.getBalance());
+//     const withraw = await contract.connect(account2).withdrawPool(0)
+//     const pay = await contract.connect(account2).payTheLoan(0,{value:budget})
+//     console.log(await contract.getContractBalance())
+//     const claim = await contract.connect(account3).claim(0)
+//    // await network.provider.send("evm_increaseTime", [32000000])
+//     expect(1).to.equal(1)
+//   })
 
-})
+// })
