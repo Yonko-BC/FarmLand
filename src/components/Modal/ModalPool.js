@@ -4,10 +4,9 @@ import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
 import { investorBalance, payTheLoan, withdrawPool } from '../../interacting/main';
 import { DivWrap } from '../SignIn/SignInElements';
-import { budget, delay, idPool, landId, minEntry, statu } from '../PoolLand';
+import { budget, createdAt, delay, idPool, landId, minEntry, statu } from '../PoolLand';
 import { FaEthereum } from 'react-icons/fa';
 import { id } from '../ContainerLand';
-
 const Background = styled.div`  
   width: 1190px;
   height: 930px;
@@ -147,6 +146,9 @@ function ModalPool({ showModalPool, setShowModalPool }) {
     },
     [setShowModalPool, showModalPool]
   );
+  console.log('delay modal',delay);
+  console.log('budget modal',budget);
+
 
   useEffect(
     () => {
@@ -155,7 +157,7 @@ function ModalPool({ showModalPool, setShowModalPool }) {
     },
     [keyPress]
   );
-
+ 
   // const today = new Date();
   // var dateDelai = new Date();
   // dateDelai.setDate(today.getDate() + delay/3600/24);
@@ -164,9 +166,11 @@ function ModalPool({ showModalPool, setShowModalPool }) {
 
 var payTheLoanEth = budget+(budget*11/100)
 // console.log(payTheLoanEth.toString());
-  return (
-    <>
-    {showModalPool ? (
+
+  return  ( 
+    <> 
+    
+    {showModalPool ? ( 
       <Background onClick={closeModal} ref={modalRef}>
        
           <ModalWrapper showModalPool={showModalPool}>
@@ -179,20 +183,21 @@ var payTheLoanEth = budget+(budget*11/100)
               <div className='landId'><h4>Land Id : </h4><p>land#000{landId}</p></div>
               <div className='landId'><h4>&nbsp;Pudget : </h4><p>{budget}&nbsp; Eth &nbsp;&nbsp;&nbsp;&nbsp; <FaEthereum/></p></div>
               <div className='landId'><h4>&nbsp;Min Entry : </h4><p>{minEntry}&nbsp; Eth &nbsp;&nbsp;&nbsp;&nbsp; <FaEthereum/></p></div>
+              <div className='landId'><h4>Created At : </h4> <p>{(new Date(Number(createdAt)*1000)).toLocaleString()}  &nbsp;&nbsp;</p><p id="demo">  </p>&nbsp;&nbsp;&nbsp;</div>
 
               <div className='landId'><h4>Delay : </h4> <p>{delay/3600/24}  &nbsp;&nbsp;</p><p id="demo"> days </p>&nbsp;&nbsp;&nbsp;</div>
 
-             
+              
         {/* <div className='landId'><h4>ETH invest : </h4> <p>{getPrice()*minEntry}</p><p id="demo"> </p>&nbsp;&nbsp;&nbsp;</div> */}
-
-              { statu === "0" ? (
+  
+              { statu === "0" ? ( 
              <button to='/signup'  primary='true'   onClick={()=>{withdrawPool(idPool)}}>
              Withraw Pool
           </button>) : (
             <button to='/signup'  primary='true'  onClick={()=>{payTheLoan(idPool,payTheLoanEth.toString())}} >
             Pay the loan
          </button> 
-          )
+          ) 
            }
             </ModalContent>
             <CloseModalButton

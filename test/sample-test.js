@@ -4,24 +4,24 @@ const { deployMintLand } = require("../scripts/deploy")
 
 
 
-describe("Mint", function () {
-  it("the _landOwner should be the owner of the token 1", async function () {
-    [owner, account1, account2, account3] = await ethers.getSigners()
-    const contract =  await deployMintLand()
-    const landValue  = ethers.utils.parseEther("500")
-    const mint = await contract.connect(account2).mintLand(account2.address,"uri",landValue)
-    console.log(account2.address);
-    const userBalance = await contract.userBalance(account2.address)
-    expect(userBalance).to.equal(1)
-  });
-  it("Should revert if someone else try to mint the land", async function () {
-    [owner, account1, account2, account3] = await ethers.getSigners()
-    const contract =  await deployMintLand()
-    const landValue  = ethers.utils.parseEther("500")
-    await expect( contract.connect(account1).mintLand(account2.address,"uri",landValue)).to.be.revertedWith("only minter")
-  });
+// describe("Mint", function () {
+//   it("the _landOwner should be the owner of the token 1", async function () {
+//     [owner, account1, account2, account3] = await ethers.getSigners()
+//     const contract =  await deployMintLand()
+//     const landValue  = ethers.utils.parseEther("500")
+//     const mint = await contract.connect(account2).mintLand(account2.address,"uri",landValue)
+//     console.log(account2.address);
+//     const userBalance = await contract.userBalance(account2.address)
+//     expect(userBalance).to.equal(1)
+//   });
+//   it("Should revert if someone else try to mint the land", async function () {
+//     [owner, account1, account2, account3] = await ethers.getSigners()
+//     const contract =  await deployMintLand()
+//     const landValue  = ethers.utils.parseEther("500")
+//     await expect( contract.connect(account1).mintLand(account2.address,"uri",landValue)).to.be.revertedWith("only minter")
+//   });
 
-});
+// });
 
 
 // describe("Create investment pool", function () {
@@ -30,7 +30,7 @@ describe("Mint", function () {
 //     const contract =  await deployMintLand()
 //     const landValue  = ethers.utils.parseEther("500")
 //     const budget = ethers.utils.parseEther("501")
-//     const mint = await contract.connect(account1).mintLand(account2.address,"uri",landValue)
+//     const mint = await contract.connect(account2).mintLand(account2.address,"uri",landValue)
 //     const approve = await contract.connect(account2).approve(contract.address,1)
 //     await expect(contract.connect(account2).createInvestmentPool(1,budget,1,30)).to.be.revertedWith("over price")
 //   })
@@ -39,7 +39,7 @@ describe("Mint", function () {
 //     const contract =  await deployMintLand()
 //     const landValue  = ethers.utils.parseEther("500")
 //     const budget = ethers.utils.parseEther("501")
-//     const mint = await contract.connect(account1).mintLand(account2.address,"uri",landValue)
+//     const mint = await contract.connect(account2).mintLand(account2.address,"uri",landValue)
 //     const approve = await contract.connect(account2).approve(contract.address,1)
 //     await expect(contract.connect(account1).createInvestmentPool(1,budget,1,30)).to.be.revertedWith("not Owner")
 //   })
@@ -47,7 +47,7 @@ describe("Mint", function () {
 //     [owner, account1, account2, account3] = await ethers.getSigners()
 //     const contract =  await deployMintLand()
 //     const landValue  = ethers.utils.parseEther("500")
-//     const mint = await contract.connect(account1).mintLand(account2.address,"uri",landValue)
+//     const mint = await contract.connect(account2).mintLand(account2.address,"uri",landValue)
 //     const approve = await contract.connect(account2).approve(contract.address,1)
 //     const create = await contract.connect(account2).createInvestmentPool(1,landValue,1,30)
 //     const landOWner = await contract.ownerOf(1)
@@ -57,63 +57,65 @@ describe("Mint", function () {
 //     [owner, account1, account2, account3] = await ethers.getSigners()
 //     const contract =  await deployMintLand()
 //     const landValue  = ethers.utils.parseEther("500")
-//     const mint = await contract.connect(account1).mintLand(account2.address,"uri",landValue)
+//     const mint = await contract.connect(account2).mintLand(account2.address,"uri",landValue)
 //     const approve = await contract.connect(account2).approve(contract.address,1)
 //     const create = await contract.connect(account2).createInvestmentPool(1,landValue,1,30)
-//     const investmentDetail = await contract.getInvstementPoolDetail(0)
+//     const investmentDetail = await contract.getInvstementPoolDetail(1)
 //     expect(investmentDetail.owner).to.equal(account2.address)
 //   })
 
 // })
 
-// describe("Invest", function () {
-//   it("Should revert if the budget is full", async function () {
-//     [owner, account1, account2, account3] = await ethers.getSigners()
-//     const contract = await deployMintLand()
-//     const landValue = ethers.utils.parseEther("100")
-//     const budget = ethers.utils.parseEther("17")
-//     const mint = await contract.connect(account1).mintLand(account2.address, "uri", landValue)
-//     const approve = await contract.connect(account2).approve(contract.address, 1)
-//     const create = await contract.connect(account2).createInvestmentPool(1, landValue, 1, 30)
-//     const invest = await contract.connect(account3).invest(0,{value:landValue})
-//     //const invest2 = await contract.connect(account3).invest(1,{value:landValue})
-//     await expect(contract.connect(account3).invest(0,{value:budget})).to.be.revertedWith("full")
-//   })
-//   it("Should revert if the last delay is finished", async function () {
-//     [owner, account1, account2, account3] = await ethers.getSigners()
-//     const contract = await deployMintLand()
-//     const landValue = ethers.utils.parseEther("100")
-//     const budget = ethers.utils.parseEther("17")
-//     const mint = await contract.connect(account1).mintLand(account2.address, "uri", landValue)
-//     const approve = await contract.connect(account2).approve(contract.address, 1)
-//     const create = await contract.connect(account2).createInvestmentPool(1, landValue, 1, 30)
-//     await network.provider.send("evm_increaseTime", [87000])
 
-//     await expect(contract.connect(account3).invest(0,{value:landValue})).to.be.revertedWith("end")
-//   })
-//   it("Should revert if the amount < mini entry", async function () {
-//     [owner, account1, account2, account3] = await ethers.getSigners()
-//     const contract = await deployMintLand()
-//     const landValue = ethers.utils.parseEther("100")
-//     const budget = ethers.utils.parseEther("3")
-//     const mint = await contract.connect(account1).mintLand(account2.address, "uri", landValue)
-//     const approve = await contract.connect(account2).approve(contract.address, 1)
-//     const create = await contract.connect(account2).createInvestmentPool(1, landValue, 1, 30)
-//     await expect(contract.connect(account3).invest(0,{value:budget})).to.be.revertedWith("wrong value")
-//   })
-//   it("Should add amount to investment pool", async function () {
-//     [owner, account1, account2, account3] = await ethers.getSigners()
-//     const contract = await deployMintLand()
-//     const landValue = ethers.utils.parseEther("100")
-//     const budget = ethers.utils.parseEther("3")
-//     const mint = await contract.connect(account1).mintLand(account2.address, "uri", landValue)
-//     const approve = await contract.connect(account2).approve(contract.address, 1)
-//     const create = await contract.connect(account2).createInvestmentPool(1, landValue, 1, 30)
-//     const invest = await contract.connect(account3).invest(0,{value:landValue})
-//     const invPool = await contract.getInvestmentPoolBalance(0)
-//      expect(invPool).to.equal(landValue)
-//   })
-// })
+describe("Invest", function () {
+  it("Should revert if the budget is full", async function () {
+    [owner, account1, account2, account3] = await ethers.getSigners()
+    const contract = await deployMintLand()
+    const landValue = ethers.utils.parseEther("100")
+    const budget = ethers.utils.parseEther("17")
+    const mint = await contract.connect(account2).mintLand(account2.address, "uri", landValue)
+    const approve = await contract.connect(account2).approve(contract.address, 1)
+    const create = await contract.connect(account2).createInvestmentPool(1, landValue, 1, 30)
+    const invest = await contract.connect(account3).invest(1,{value:landValue})
+    //const invest2 = await contract.connect(account3).invest(1,{value:landValue})
+    await expect(contract.connect(account3).invest(1,{value:budget})).to.be.revertedWith("full")
+  })
+  it("Should revert if the last delay is finished", async function () {
+    [owner, account1, account2, account3] = await ethers.getSigners()
+    const contract = await deployMintLand()
+    const landValue = ethers.utils.parseEther("100")
+    const budget = ethers.utils.parseEther("17")
+    const mint = await contract.connect(account2).mintLand(account2.address, "uri", landValue)
+    const approve = await contract.connect(account2).approve(contract.address, 1)
+    const create = await contract.connect(account2).createInvestmentPool(1, landValue, 1, 30)
+    await network.provider.send("evm_increaseTime", [87000])
+
+    await expect(contract.connect(account3).invest(1,{value:landValue})).to.be.revertedWith("end")
+  })
+  it("Should revert if the amount < mini entry", async function () {
+    [owner, account1, account2, account3] = await ethers.getSigners()
+    const contract = await deployMintLand()
+    const landValue = ethers.utils.parseEther("100")
+    const budget = ethers.utils.parseEther("3")
+    const mint = await contract.connect(account2).mintLand(account2.address, "uri", landValue)
+    const approve = await contract.connect(account2).approve(contract.address, 1)
+    const create = await contract.connect(account2).createInvestmentPool(1, landValue, 1, 30)
+    
+    await expect(contract.connect(account3).invest(1,{value:budget})).to.be.revertedWith("wrong value")
+  })
+  it("Should add amount to investment pool", async function () {
+    [owner, account1, account2, account3] = await ethers.getSigners()
+    const contract = await deployMintLand()
+    const landValue = ethers.utils.parseEther("100")
+    const budget = ethers.utils.parseEther("3")
+    const mint = await contract.connect(account2).mintLand(account2.address, "uri", landValue)
+    const approve = await contract.connect(account2).approve(contract.address, 1)
+    const create = await contract.connect(account2).createInvestmentPool(1, landValue, 1, 30)
+    const invest = await contract.connect(account3).invest(1,{value:landValue})
+    const invPool = await contract.getInvestmentPoolBalance(1)
+     expect(invPool).to.equal(landValue)
+  })
+})
 
 
 // describe("Withdraw pool", function () {

@@ -899,6 +899,8 @@ console.log('account3',account3.address);
 console.log('account4',account4.address);
 
 }
+
+
 async function mintLand() {
     [owner, account1, account2, account3,account4] = await ethers.getSigners()
     // land value (by minter)
@@ -934,7 +936,7 @@ async function invest() {
     [owner, account1, account2, account3,account4] = await ethers.getSigners()
 
     const investmentPoolId = 1
-    const  priceMale = 1
+    const  priceMale = 3
 
     const miniEntry = await contract.connect(account3).getMiniEntry(investmentPoolId)
     const converted_miniEntry = ethers.utils.formatEther(miniEntry)
@@ -948,7 +950,7 @@ async function invest() {
 
 async function withdrawPool() {
     [owner, account1, account2, account3] = await ethers.getSigners()
-    const investmentPoolId = 4
+    const investmentPoolId = 1
     const withdrawPool_TX = await contract.connect(account1).withdrawPool(investmentPoolId)
     console.log("Withdrew");
 }
@@ -957,8 +959,8 @@ async function withdrawPool() {
 async function payTheLoan() {
 
     [owner, account1, account2, account3] = await ethers.getSigners()
-    const investmentPoolId = 4
-    const budget = ethers.utils.parseEther("68")
+    const investmentPoolId = 1
+    const budget = ethers.utils.parseEther("55.5")
     const payTheLoan_TX = await contract.connect(account1).payTheLoan(investmentPoolId, { value: budget })
     console.log("Paied");
 }
@@ -1053,7 +1055,7 @@ const getAllInvestmentPools = async () => {
 
 // getAddress()
 
-getMinter()
+// getMinter()
 
 
 // npx hardhat compile => compile

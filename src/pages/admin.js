@@ -116,12 +116,10 @@ var value
 
   function getValue() {
     var  buttonValue =  document.getElementById('value').value;
-    // console.log('id : ',buttonValue)  
-  
+    // console.log('id : ',buttonValue)  \
 
     value=buttonValue
-    
-  
+
   console.log('value : ',value)  
   }  
 

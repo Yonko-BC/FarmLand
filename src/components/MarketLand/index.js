@@ -18,7 +18,9 @@ import { createInvestmentPool, invest, mintLand, signer_address , contract } fro
 
  
 
-
+const DivKhawya = styled.div`
+margin-bottom: 28rem;
+`
 // const Container = styled.div`
 //   display: flex;
 //   justify-content: center;
@@ -41,7 +43,7 @@ const Button = styled.button`
   margin-top: -1.5rem;
 `;
  
-export var idPool,landId,delay,budget,MaxInvestor,minEntry,owner,statu
+export var idPool,landId,delay,budget,MaxInvestor,minEntry,owner,statu,createdAt
 
 const ContainerLand = () => {
 
@@ -166,18 +168,24 @@ console.log('status : ',statu)
 }
 ///////////////////////
  
+async function getCreatedAt(e) {
+  var  buttonValue = await document.getElementById('investBtn').getAttribute('data-created');
+if(buttonValue=e){
+  createdAt=buttonValue
+} 
+console.log('createdAt : ',createdAt)  
+} 
  
     return ( 
         <> 
      
       <LandContainer id='test'> 
          
-      {/* <Container> */}
+      {/* <Container> */}  
         {/* <Button onClick={openModal}>I'm a modal</Button> */}
         <ModalDetail showModalDetail={showModalDetail} setShowModalDetail={setShowModalDetail} />
         <ModalInvestor showModalInvestor={showModalInvestor} setShowModalInvestor={setShowModalInvestor} />
    
-     
         {/* <GlobalStyle /> */} 
       {/* </Container> */}       
           <LandH1>Marketplace  </LandH1>
@@ -208,8 +216,9 @@ console.log('status : ',statu)
  
                   </div> 
                  
-                  <Btn to='/signup' value={invest.id.toString()} data-landId={invest.landId.toString()} data-delay={invest.lastDelayForInvestInDays.toString()} data-MaxInvestor={invest.maxInvestors.toString()} data-minEntry={invest.minEntry.toString()/Math.pow(10,18)} data-owner={invest.owner.toString()} data-statu={invest.status.toString()} data-budget={invest.totalBudget.toString()/Math.pow(10,18)}   primary='true' id='investBtn' onClick={()=>{
-                    getBudget(invest.totalBudget.toString()/Math.pow(10,18))
+                  <Btn to='/signup' data-created={invest.createdAt.toString()} value={invest.id.toString()} data-landId={invest.landId.toString()} data-delay={invest.lastDelayForInvestInDays.toString()} data-MaxInvestor={invest.maxInvestors.toString()} data-minEntry={invest.minEntry.toString()/Math.pow(10,18)} data-owner={invest.owner.toString()} data-statu={invest.status.toString()} data-budget={invest.totalBudget.toString()/Math.pow(10,18)}   primary='true' id='investBtn' onClick={()=>{
+                    getCreatedAt(invest.createdAt.toString())
+                  getBudget(invest.totalBudget.toString()/Math.pow(10,18))
                     getstatus(invest.status.toString())
                     getowner(invest.owner.toString())
                     getMinEntry(invest.minEntry.toString()/Math.pow(10,18))
@@ -229,7 +238,8 @@ console.log('status : ',statu)
        );} 
       })
     ) : (
-      <h1>NO DATA</h1>
+      <DivKhawya></DivKhawya>
+      // <h1>NO DATA</h1>
     )}
         
           </LandWrapper>

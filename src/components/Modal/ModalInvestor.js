@@ -6,7 +6,7 @@ import {FaEthereum} from 'react-icons/fa';
 import { createInvestmentPool, invest, mintLand, signer_address , contract } from '../../interacting/main'
 
 import { DivWrap, FormInput } from '../SignIn/SignInElements';
-import { budget, delay, idPool, landId, MaxInvestor, minEntry } from '../MarketLand';
+import { budget, createdAt, delay, idPool, landId, MaxInvestor, minEntry } from '../MarketLand';
 
 
 const Background = styled.div`
@@ -215,7 +215,9 @@ function ModalInvestor({ showModalInvestor, setShowModalInvestor }) {
                 <div className='landId'><h4>Land Id : </h4><p>land#000{landId}</p></div>
                 <div className='landId'><h4>&nbsp;Pudget : </h4><p>{budget}&nbsp; Eth &nbsp;&nbsp;&nbsp;&nbsp; <FaEthereum/></p></div>
                 <div className='landId'><h4>&nbsp;Min Entry : </h4><p>{minEntry}&nbsp; Eth &nbsp;&nbsp;&nbsp;&nbsp; <FaEthereum/></p></div>
+          <div className='landId'><h4>Created At : </h4> <p>{(new Date(Number(createdAt)*1000)).toLocaleString()}  &nbsp;&nbsp;</p><p id="demo">  </p>&nbsp;&nbsp;&nbsp;</div>
 
+        
                 <div className='landId'><h4>Delay : </h4> <p>{delay/3600/24}  &nbsp;&nbsp;</p><p id="demo"> days </p>&nbsp;&nbsp;&nbsp;</div>
 
                 {/* <DivWrap className="wrap-input100 validate-input m-b-16" data-validate="Valid Number is required">

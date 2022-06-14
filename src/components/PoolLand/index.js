@@ -6,7 +6,7 @@ import Icon3 from '../../images/crypto.png'
 import {LandContainer,LandH1,LandWrapper,LandSurface,LandPosition,LandCard,LandIcon,LandH2,LandP} from './ContainerLandElements'
 import { AiFillExclamationCircle } from 'react-icons/ai'
 import { FaMapMarker } from 'react-icons/fa'
-   
+
 import { Button as Btn } from '../ButtonElement'
 import { useState,useEffect } from 'react'
 import ModalPool from '../Modal/ModalPool'
@@ -27,7 +27,9 @@ import styled from 'styled-components';
 //   /* height: 100vh; */
 //   /* margin-top: 40rem; */
 // `;
-
+const DivKhawya = styled.div`
+margin-bottom: 28rem;
+`
 const Button = styled.button`
   /* min-width: 100px; */
   /* padding: 16px 32px; */
@@ -41,7 +43,7 @@ const Button = styled.button`
   margin-left: 13rem !important;
   margin-top: -1.5rem;
 `;
-export var idPool,landId,delay,budget,MaxInvestor,minEntry,Owner,statu
+export var idPool,landId,delay,budget,MaxInvestor,minEntry,Owner,statu,createdAt
 
 const ContainerLand = () => { 
 
@@ -64,7 +66,6 @@ const [invests, setInvests] = useState([]);
 
 const [lands, setLand] = useState([]);
 const [newVari, setNewVari] = useState([]);
-
 invests.forEach(i => { 
 
   if(!lands.includes(Number(i.id.toString())) ){
@@ -74,9 +75,11 @@ invests.forEach(i => {
     console.log('ayyy', newVari);  
   }  
   });  
-  console.log('ayyy', newVari);  
+  console.log('newVari', newVari);  
 
-
+  // function delay(time) {
+  //   return new Promise(resolve => setTimeout(resolve, time));
+  // }
 useEffect(() => {
   const getUserPools = async () => { 
     
@@ -95,11 +98,12 @@ useEffect(() => {
     
     
   };
-  
+  setTimeout(() => {  console.log("World!"); }, 1000); 
+
   getUserPools();
 }, []);
-    
-    return (
+
+return ( 
         <>
       
       <LandContainer id='test'>
@@ -204,49 +208,61 @@ async function getstatus(e) {
   var  buttonValue = await document.getElementById('PoolDetail').getAttribute('data-statu');
 if(buttonValue=e){
   statu=buttonValue
-}
+} 
 console.log('status : ',statu)  
 } 
+
+async function getCreatedAt(e) {
+  var  buttonValue = await document.getElementById('PoolDetail').getAttribute('data-created');
+if(buttonValue=e){
+  createdAt=buttonValue
+} 
+console.log('createdAt : ',createdAt)  
+} 
 ///////////////////////
- 
-      return ( 
+if (Status(invest.status.toString())!=='Deposit') {
+  return ( 
             
-        <LandCard>   
-                  
-        <Button onClick={()=>{
-          getowner(invest.owner.toString())
-          getBudget(invest.totalBudget.toString()/Math.pow(10,18))
-          getLandId(invest.landId.toString())
-          openModalDetail()}}>< AiFillExclamationCircle color="black"/></Button>
-          
-        <LandIcon src={Icon1}/>    
-        <LandH2>Land#000{invest.id.toString()}</LandH2> 
-          
-        <p>Total Budget : {invest.totalBudget.toString()/Math.pow(10,18)} ETH </p>
-        <p>status : {Status(invest.status.toString())}  </p>
- 
+    <LandCard>   
+              
+    <Button onClick={()=>{
+      getowner(invest.owner.toString()) 
+      getBudget(invest.totalBudget.toString()/Math.pow(10,18))
+      getLandId(invest.landId.toString())
+      openModalDetail()}}>< AiFillExclamationCircle color="black"/></Button>
         
-        <Btn to='/signup'  value={invest.id.toString()} data-landId={invest.landId.toString()} data-delay={invest.lastDelayForInvestInDays.toString()} data-MaxInvestor={invest.maxInvestors.toString()} data-minEntry={invest.minEntry.toString()/Math.pow(10,18)} data-owner={invest.owner.toString()} data-statu={invest.status.toString()} data-budget={invest.totalBudget.toString()/Math.pow(10,18)}   primary='true' id='PoolDetail' onClick={()=>{
-                    getBudget(invest.totalBudget.toString()/Math.pow(10,18))
-                    getstatus(invest.status.toString())
-                    getowner(invest.owner.toString())
-                    getMinEntry(invest.minEntry.toString()/Math.pow(10,18))
-                    getMaxInvestors(invest.maxInvestors.toString())
-                    getDelay(invest.lastDelayForInvestInDays.toString())
-                    getLandId(invest.landId.toString())
-                    getIdPool(invest.id.toString())
-                    openModalPool()}}>
-                       Pool Detail
-                  </Btn>   
-        {/* <Btn  primary='true' onClick={invest}>
-             test 
-        </Btn>    */}
-  
-    </LandCard>
-   );
+    <LandIcon src={Icon1}/>     
+    <LandH2>Land#000{invest.id.toString()}</LandH2>   
+      
+    <p>Total Budget : {invest.totalBudget.toString()/Math.pow(10,18)} ETH </p>
+    <p>status : {Status(invest.status.toString())}  </p>
+
+     
+    <Btn to='/signup'  value={invest.id.toString()} data-created={invest.createdAt.toString()} data-landId={invest.landId.toString()} data-delay={invest.lastDelayForInvestInDays.toString()} data-MaxInvestor={invest.maxInvestors.toString()} data-minEntry={invest.minEntry.toString()/Math.pow(10,18)} data-owner={invest.owner.toString()} data-statu={invest.status.toString()} data-budget={invest.totalBudget.toString()/Math.pow(10,18)}   primary='true' id='PoolDetail' onClick={()=>{
+                getCreatedAt(invest.createdAt.toString())
+                getBudget(invest.totalBudget.toString()/Math.pow(10,18))
+                getstatus(invest.status.toString())
+                getowner(invest.owner.toString())
+                getMinEntry(invest.minEntry.toString()/Math.pow(10,18))
+                getMaxInvestors(invest.maxInvestors.toString())
+                getDelay(invest.lastDelayForInvestInDays.toString())
+                getLandId(invest.landId.toString())
+                getIdPool(invest.id.toString())
+                openModalPool()}}>
+                   Pool Detail
+              </Btn>   
+    {/* <Btn  primary='true' onClick={invest}>
+         test 
+    </Btn>    */}
+
+</LandCard>
+);
+}
+     
   }) 
 ) : (
-  <h1>NO DATA</h1>
+  <DivKhawya className='khawya'></DivKhawya>
+  // <h1>NO DATA</h1>
 )} 
  
           </LandWrapper>

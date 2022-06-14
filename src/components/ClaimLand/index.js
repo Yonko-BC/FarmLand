@@ -18,7 +18,9 @@ import styled from 'styled-components';
 
 
 
-
+const DivKhawya = styled.div`
+margin-bottom: 28rem;
+`
 
 const BtnDisable = styled.button`
 
@@ -87,7 +89,7 @@ if(!filtrer.includes(Number(i.id.toString())) ){
 } 
 });
 // console.log('yooooo',newVari);
-console.log('filter',filtrer);
+console.log('filter',newVari);
 
 // document.getElementById('disable').style.cursor='not-allowed'
 
@@ -187,6 +189,14 @@ else if( statut_number === '3'){
                 // console.log("detailed",pools[invest-1].id.toString());
           // console.log("alndID",invest.toString())
           //console.log("HOW MUCH !");
+          const unixTimestamp = newVari[invest - 1].createdAt
+
+          const milliseconds = unixTimestamp * 1000 // 1575909015000
+          
+          const dateObject = new Date(milliseconds)
+          
+          const humanDateFormat = dateObject.toLocaleString() //2019-12-9 10:30:15
+          
           return (
 
             <LandCard>
@@ -201,7 +211,12 @@ else if( statut_number === '3'){
             <LandIcon src={Icon1}/> 
             <LandH2>Land Id : {newVari[invest - 1].id.toString()}</LandH2>
             <div> <LandPosition>  Statue : {Status(newVari[invest - 1].status.toString())}</LandPosition>
-            <LandSurface>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time : {(newVari[invest - 1].createdAt.toString())} s</LandSurface>
+            <LandSurface>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;Time :&nbsp;&nbsp;{humanDateFormat} 
+            </LandSurface>
             </div>
            { newVari[invest - 1].status.toString() === "2" ? (
              <Btn   primary='true' onClick={() => claim(newVari[invest - 1].id.toString())} >
@@ -218,7 +233,8 @@ else if( statut_number === '3'){
           );
         })
       ) : (
-        <h1>NO DATA</h1>
+        // <h1>NO DATA</h1>
+        <DivKhawya></DivKhawya>
       )}
              
       

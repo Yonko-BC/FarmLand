@@ -224,8 +224,10 @@ console.log('delay : ',delay)
                 <h5>Pudget :  </h5><FormInput id='budget' className='inputForm' type="number" placeholder="ETH" min="10" max="100" required/>
             </DivWrap>
           <DivWrap className="wrap-input100 validate-input m-b-16" data-validate="Password is required"> 
+
           <h5>Delay : &nbsp;&nbsp;  </h5> <FormInput id='delay' className='inputForm' type="number" placeholder="day" min="1" max="30"  required/>    
           </DivWrap>
+
           <DivWrap className="wrap-input100 validate-input m-b-16" data-validate="Password is required"> 
           <h5>number of investor : &nbsp;&nbsp;  </h5> <FormInput id='number'  type="number" placeholder="Max number" min="1" max="30"  required/>    
           </DivWrap>

@@ -31,7 +31,9 @@ import styled from "styled-components";
 //   /* height: 100vh; */
 //   /* margin-top: 40rem; */
 // `;
-
+const DivKhawya = styled.div`
+margin-bottom: 28rem;
+`
 const Button = styled.button`
   /* min-width: 100px; */
   /* padding: 16px 32px; */  
@@ -60,7 +62,7 @@ const ContainerLand = () => {
     setShowModalDetail((prev) => !prev);
     
   };    
-
+ 
   const [showModalInvest, setShowModalInvest] = useState(false);
 
   const openModalInvest = () => {
@@ -209,7 +211,8 @@ openModalDetail()
    );  
   })
 ) : ( 
-  <h1>NO DATAaa</h1> 
+  <DivKhawya></DivKhawya>
+  // <h1>NO DATAaa</h1> 
 )}    
     
       </LandWrapper>
